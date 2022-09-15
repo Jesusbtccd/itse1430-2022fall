@@ -8,10 +8,13 @@ bool isClassic = false;
 
 DisplayInformation();
 
-bool done = false;
+//bool 
+var done = false;
 do
 {
-    MenuOption input = DisplayMenu();
+    //type inferencing - compiler figures out type based upon context
+    //MenuOption input = DisplayMenu();
+    var input = Displaymenu();
     Console.WriteLine();
     switch (input)
     {
@@ -21,9 +24,9 @@ do
             AddMovie();
             break;   
         }
-        case MenuOption.Add: EditMovie(); break;
-        case MenuOption.Add: ViewMovie(); break;
-        case MenuOption.Add: DeleteMovie(); break;
+        case MenuOption.Edit: EditMovie(); break;
+        case MenuOption.View: ViewMovie(); break;
+        case MenuOption.Delete: DeleteMovie(); break;
         case MenuOption.Quit : done = true; break;
     };
     //if (input =='A')
@@ -39,15 +42,23 @@ do
     
 } while (true);
 
-
-
-DisplayMenu();
-
-AddMovie();
-
-MenuOption DisplayMenu ()
+void DisplayInformation ()
 {
+    Console.WriteLine("Movie Library");
+    Console.WriteLine("ITSE 1430 Sample");
+    Console.WriteLine("Fall 2022");
+
+
+
+    DisplayMenu();
+
+    AddMovie();
+
+    MenuOption DisplayMenu ()
+    {
     Console.WriteLine();
+    //Console.WriteLine("----------");
+    Console.WriteLine("".PadLeft(10, '-'));
     Console.WriteLine("A)dd Movie");
     Console.WriteLine("E)dit Movie");
     Console.WriteLine("V)iew Movie");
@@ -186,10 +197,22 @@ void ViewMovie()
         Console.WriteLine("' No movies avalable");
         return;
     };
+    
+
     Console.WriteLine(title);
-    Console.WriteLine(releaseYear);
+
+    //string formatting
+    //option 1 - concatenaation 
+    //console.writeline(Lentgh; " + runLength + " mins");
+
+    //option 2 - string.format
+    //to string
+    //Console.WriteLine(releaseYear);
+    Console.WriteLine(releaseYear.ToString());
     Console.WriteLine(description);
-    Console.WriteLine("Length: "+ runLength + " mins");
+    //Console.WriteLine("Length: "+ runLength + " mins");
+
+    Console.WriteLine(String.Format("Length: {0} mins", runLength));
     Console.WriteLine("MPAA Rating: " + rating);
     Console.WriteLine("Classic: " + isClassic);
 
