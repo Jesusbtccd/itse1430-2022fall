@@ -2,31 +2,211 @@
 //ITSE-1430.Fall
 //08/3/2022
 
-Console.WriteLine("Jesus Bustillos");
-Console.WriteLine("ITSE 1430 Fall");
-Console.WriteLine("09/21/2022");
-
-string processor = "";
+string title = "";
 string description = "";
-int price1 = 0; 
-int price2 = 1900;
+string processorMenu = "DisplayprocessorMenu";
+int runLength = 0; //in minutes
+int releaseYear = 1900;
 string rating = "";
 bool isClassic = false;
 
 
-MainMenu();
+DisplayInformation();
+//DisplayprocessorMenu();
+
+
+//void DisplayprocessorMenu ()
+//{
+//    Console.WriteLine();
+//    Console.WriteLine("".PadLeft(10, '-'));
+//    Console.WriteLine("A)AMD Ryzen 9 5900X");
+//    Console.WriteLine("E)dit Cart");
+//    Console.WriteLine("V)iew Cart");
+//    Console.WriteLine("D)elete Item");
+//    Console.WriteLine("Q)uit");
+//}
+
+
+void DisplayInformation ()
+{
+    Console.WriteLine("Jesus Bustillos");
+    Console.WriteLine("PC Builder");
+    Console.WriteLine("ITSE 1430-Fall 2022");
+    Console.WriteLine("09/21/2022");
+}
+
+var done = false;
+do
+{
+    //type inferencing - compiler figures out type based upon context
+    //MenuOption input = DisplayMenu();
+    var input = DisplayMenu();
+    Console.WriteLine();
+    switch (input)
+    {
+
+        case MenuOption.Add:
+        {
+            AddMovie();
+            break;
+        }
+        case MenuOption.Edit: EditMovie(); break;
+        case MenuOption.View: ViewMovie(); break;
+        case MenuOption.Delete: DeleteMovie(); break;
+        case MenuOption.Quit: done = true; break;
+    };
+    //if (input =='A')
+    //    AddMovie();
+    //else if (input == 'E')
+    //    EditMovie();
+    //else if (input == 'V')
+    //    ViewMovie();
+    //else if (input == 'D')
+    //    DeleteMovie();
+    //else if (input == 'Q')
+    //    break;
+
+} while (true);
+
+var did = false;
+do
+{
+    //type inferencing - compiler figures out type based upon context
+    //MenuOption input = DisplayMenu();
+    var input = DisplayMenu();
+    Console.WriteLine();
+    switch (input)
+    {
+
+        case MenuOption.Add:
+        {
+            AddMovie();
+            break;
+        }
+        case MenuOption.Edit: EditMovie(); break;
+        case MenuOption.View: ViewMovie(); break;
+        case MenuOption.Delete: DeleteMovie(); break;
+        case MenuOption.Quit: did = true; break;
+    };
+    //if (input =='A')
+    //    AddMovie();
+    //else if (input == 'E')
+    //    EditMovie();
+    //else if (input == 'V')
+    //    ViewMovie();
+    //else if (input == 'D')
+    //    DeleteMovie();
+    //else if (input == 'Q')
+    //    break;
+
+} while (true);
+
+
+
+DisplayMenu();
+
+AddMovie();
+
+DisplayprocessorMenu();
+
+MenuOption DisplayMenu ()
+{
+    Console.WriteLine();
+    //Console.WriteLine("----------");
+    Console.WriteLine("".PadLeft(10, '-'));
+    Console.WriteLine("A)dd Processor");
+    Console.WriteLine("E)dit Cart");
+    Console.WriteLine("V)iew Cart");
+    Console.WriteLine("D)elete Item");
+    Console.WriteLine("Q)uit");
+
+
+
+    do
+    {
+
+        ConsoleKeyInfo key = Console.ReadKey(true);
+        switch (key.Key)
+        {
+            case ConsoleKey.A: return MenuOption.Add;
+            case ConsoleKey.E: return MenuOption.Edit;
+            case ConsoleKey.V: return MenuOption.View;
+            case ConsoleKey.D: return MenuOption.Delete;
+            case ConsoleKey.Q: return MenuOption.Quit;
+        };
+
+        //if (key.Key == ConsoleKey.A)
+        //    return 'A';
+        //else if (key.Key == ConsoleKey.E)
+        //    return 'E';
+        //else if (key.Key == ConsoleKey.V)
+        //    return 'V';
+        //else if (key.Key == ConsoleKey.D)
+        //    return 'D';
+        //else if (key.Key == ConsoleKey.Q)
+        //    return 'Q';
+
+    } while (true);
+}
+
+MenuOption DisplayprocessorMenu ()
+{
+    Console.WriteLine();
+    //Console.WriteLine("----------");
+    Console.WriteLine("".PadLeft(10, '-'));
+    Console.WriteLine("A)dd Processor");
+    Console.WriteLine("E)dit Cart");
+    Console.WriteLine("V)iew Cart");
+    Console.WriteLine("D)elete Item");
+    Console.WriteLine("Q)uit");
+
+
+
+    do
+    {
+
+        ConsoleKeyInfo key = Console.ReadKey(true);
+        switch (key.Key)
+        {
+            case ConsoleKey.A: return MenuOption.Add;
+            case ConsoleKey.E: return MenuOption.Edit;
+            case ConsoleKey.V: return MenuOption.View;
+            case ConsoleKey.D: return MenuOption.Delete;
+            case ConsoleKey.Q: return MenuOption.Quit;
+        };
+
+        //if (key.Key == ConsoleKey.A)
+        //    return 'A';
+        //else if (key.Key == ConsoleKey.E)
+        //    return 'E';
+        //else if (key.Key == ConsoleKey.V)
+        //    return 'V';
+        //else if (key.Key == ConsoleKey.D)
+        //    return 'D';
+        //else if (key.Key == ConsoleKey.Q)
+        //    return 'Q';
+
+    } while (true);
+}
+
+
+
+////functions
 
 bool ReadBoolean ( string message )
 {
     Console.Write(message);
 
     //Looking for y/n
-    ConsoleKeyInfo key = Console.ReadKey();
-    if (key.Key == ConsoleKey.Y)
-        return true;
-    else if (key.Key == ConsoleKey.N)
-        return false;
-
+    do
+    {
+        ConsoleKeyInfo key = Console.ReadKey();
+        if (key.Key == ConsoleKey.Y)
+            return true;
+        else if (key.Key == ConsoleKey.N)
+            return false;
+    } while (true);
+    //TODO:ERROR
     return false;
 }
 
@@ -54,57 +234,98 @@ int ReadInt32 ( string message, int minimumValue, int maximumValue )
         Console.WriteLine("Value must be between " + minimumValue + " and " + maximumValue);
     } while (true);
 
-    string ReadString ( string message, bool required )
-    {
-        Console.Write(message);
-
-        while (true)
-        {
-            string value = Console.ReadLine();
-
-            //if value is not empty or not required
-            if (value != "" || !required)
-                return value;
-
-            //:value is empty and required
-            Console.WriteLine("Value is required");
-        };
-    }
-
-    void MainMenu ()
-    {
-        //string title = "";
-        processor = ReadString("Enter a title: ", true);
-
-        //string description = "";
-        description = ReadString("Enter an optional description: ", false);
-
-        //int runlength = 0; //in minutes
-        price1 = ReadInt32("Enter a run length (in minutes): ", 0, 300);
-
-        price2 = ReadInt32("Enter the release year: ", 1900, 2100);
-        rating = ReadString("Entering MPAA rating: ", true);
-
-        isClassic = ReadBoolean("Is this a classic? ");
-    }
-
 
 
 }
 
+string ReadString ( string message, bool required )
+{
+    
+    Console.Write(message);
 
-//string input = "";
-//while (input != "Exit")
+    while (true)
+    {
+        string value = Console.ReadLine();
+
+        //if value is not empty or not required
+        if (value != "" || !required)
+            return value;
+
+        //:value is empty and required
+        Console.WriteLine("Value is required");
+    };
+}
+
+void AddMovie ()
+{
+    //string title = "";
+    title = ReadString($"Enter a processor: {processorMenu} ", true);
+
+    //string description = "";
+    description = ReadString("Enter an optional description: ", false);
+
+    //int runlength = 0; //in minutes
+    runLength = ReadInt32("Enter a run length (in minutes): ", 0, 300);
+
+    releaseYear = ReadInt32("Enter the release year: ", 1900, 2100);
+    rating = ReadString("Entering MPAA rating: ", true);
+
+    isClassic = ReadBoolean("Is this a classic? ");
+}
+
+void DeleteMovie ()
+{
+    if (title == "")
+        return;
+
+    //Not confirmed
+    if (!ReadBoolean("Are you sure you want to delete the movie (Y/N)?"))
+        return;
+
+    //todo : delete movie 
+    title = "";
+}
+
+void EditMovie ()
+{ }
+
+void ViewMovie ()
+{
+    if (title == "")
+    {
+        Console.WriteLine("' No movies avalable");
+        return;
+    };
+
+
+    Console.WriteLine(title);
+
+    //string formatting
+    //option 1 - concatenaation 
+    //console.writeline(Lentgh; " + runLength + " mins");
+
+    //option 2 - string.format
+    //to string
+    //Console.WriteLine(releaseYear);
+    Console.WriteLine(releaseYear.ToString());
+    Console.WriteLine(description);
+    //Console.WriteLine("Length: "+ runLength + " mins");
+
+    Console.WriteLine(String.Format("Length: {0} mins", runLength));
+    Console.WriteLine("MPAA Rating: " + rating);
+    Console.WriteLine("Classic: " + isClassic);
+
+}
+
+//void DisplayprocessorMenu ()
 //{
 //    Console.WriteLine();
-//    Console.WriteLine("Choose an option: ");
-//    Console.WriteLine("1: Processor");
-//    Console.WriteLine("2: Memory");
-//    Console.WriteLine("3: Exit");
-//    //Console.WriteLine("Press Exit");
-//    input = Console.ReadLine();
-//    if (input == "1")
-//    {
+//    Console.WriteLine("".PadLeft(10, '-'));
+//    Console.WriteLine("A)AMD Ryzen 9 5900X");
+//    Console.WriteLine("E)dit Cart");
+//    Console.WriteLine("V)iew Cart");
+//    Console.WriteLine("D)elete Item");
+//    Console.WriteLine("Q)uit");
+//}
 
-//    }
-//};
+
