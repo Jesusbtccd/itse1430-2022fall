@@ -49,7 +49,7 @@ do
     //else if (input == 'Q')
     //    break;
 
-} while (true);
+} while (!done);
 
 void DisplayInformation ()
 {
@@ -117,7 +117,7 @@ bool ReadBoolean ( string message )
                 return false;
         } while (true);
         //TODO:ERROR
-        return false;
+        //return false;
     }
 
 int ReadInt32 ( string message, int minimumValue, int maximumValue )
@@ -173,26 +173,35 @@ Movie AddMovie ()
     //string title = "";
     //movie.title = ReadString("Enter a title: ", true);
 
-    movie.SetTitle(ReadString("Enter a title: ", true));
+    // movie.SetTitle(ReadString("Enter a title: ", true));
+    movie.Title = ReadString("Enter a title: ", true);
 
     //string description = "";
-    movie._description = ReadString("Enter an optional description: ", false);
+    movie.Description = ReadString("Enter an optional description: ", false);
 
         //int runlength = 0; //in minutes
-        movie._runLength = ReadInt32("Enter a run length (in minutes): ", 0, 300);
+        movie.RunLength = ReadInt32("Enter a run length (in minutes): ", 0, 300);
 
-        movie._releaseYear = ReadInt32("Enter the release year: ", 1900, 2100);
-        movie._rating = ReadString("Entering MPAA rating: ", true);
+        movie.ReleaseYear = ReadInt32("Enter the release year: ", 1900, 2100);
+        movie.Rating = ReadString("Entering MPAA rating: ", true);
 
-        movie._isClassic = ReadBoolean("Is this a classic? ");
+        movie.IsClassic = ReadBoolean("Is this a classic? ");
 
+    return movie;
+}
+
+Movie GetSelectedMovie ()
+{
+    //HACK: For now
     return movie;
 }
 
 void DeleteMovie ()
 {
+    var selectedMovie = GetSelectedMovie ();
+
     //No movie
-    if (movie.title == "")
+    if (selectedMovie == null)
         return;
 
     //Not confirmed
@@ -200,15 +209,15 @@ void DeleteMovie ()
         return;
 
     //TODO: Delete movie
-    movie.title = "";
+    movie = null;
 }
 
 void EditMovie ()
 { }
 
-void ViewMovie ()
+void ViewMovie (Movie movie)
 {
-    if (movie.title == "")
+    if (movie == null)
     {
         Console.WriteLine("No movies available");
         return;
@@ -226,25 +235,25 @@ void ViewMovie ()
     //string someValue = $"Length = {runLength}";
 
     //ToString
-    Console.WriteLine($"{movie.GetTitle()} ({movie._releaseYear})");
+    Console.WriteLine($"{movie.Title} ({movie.ReleaseYear})");
     //Console.WriteLine(releaseYear);
     //Console.WriteLine(releaseYear.ToString());
 
     //Console.WriteLine("Length: " + runLength + " mins");
     //Console.WriteLine(String.Format("Length: {0} mins", runLength));
     //Console.WriteLine("Length: {0} mins", runLength);
-    Console.WriteLine($"Length: {movie._runLength} mins");
+    Console.WriteLine($"Length: {movie.RunLength} mins");
 
-    Console.WriteLine($"Rated {movie._rating}");
+    Console.WriteLine($"Rated {movie.Rating}");
     //Console.WriteLine($"This {(isClassic ? "Is" : "Is Not")} a Classic");
-    Console.WriteLine($"Is Classic: {(movie._isClassic ? "Yes" : "No")}");
-    Console.WriteLine(movie._description);
+    Console.WriteLine($"Is Classic: {(movie.IsClassic ? "Yes" : "No")}");
+    Console.WriteLine(movie.Description);
 }
 
-var movie = getselectedMovie();
-    {
+//var movie = getselectedMovie();
+//    {
 
-    return movie;
+//    return movie;
     //    if (movie.title == "")
     //        return;
 
@@ -254,38 +263,38 @@ var movie = getselectedMovie();
 
     ////todo : delete movie 
     //    movie.title = "";
-    }
+    //}
 
-    void EditMovie ()
-    { }
+    //void EditMovie ()
+    //{ }
 
-    void ViewMovie ()
-    {
-        if (movie.title == "")
-        {
-            Console.WriteLine("' No movies avalable");
-            return;
-        };
+    //void ViewMovie ( Movie movie)
+    //{
+    //    if (movie == null)
+    //    {
+    //        Console.WriteLine("' No movies avalable");
+    //        return;
+        //};
 
 
-        Console.WriteLine(movie.title);
+    //    //Console.WriteLine(movie.title);
 
-        //string formatting
-        //option 1 - concatenaation 
-        //console.writeline(Lentgh; " + runLength + " mins");
+    //    //string formatting
+    //    //option 1 - concatenaation 
+    //    //console.writeline(Lentgh; " + runLength + " mins");
 
-        //option 2 - string.format
-        //to string
-        //Console.WriteLine(releaseYear);
-        Console.WriteLine(movie._releaseYear.ToString());
-        Console.WriteLine(movie._description);
-        //Console.WriteLine("Length: "+ runLength + " mins");
+    //    //option 2 - string.format
+    //    //to string
+    //    //Console.WriteLine(releaseYear);
+    //    Console.WriteLine(movie._releaseYear.ToString());
+    //    Console.WriteLine(movie.Description);
+    //    //Console.WriteLine("Length: "+ runLength + " mins");
 
-        Console.WriteLine(String.Format("Length: {0} mins", runLength));
-        Console.WriteLine("MPAA Rating: " + movie._rating);
-        Console.WriteLine("Classic: " + movie._isClassic);
+    //    Console.WriteLine(String.Format("Length: {0} mins", runLength));
+    //    Console.WriteLine("MPAA Rating: " + movie._rating);
+    //    Console.WriteLine("Classic: " + movie._isClassic);
 
-    }
+    //}
 
 
 //Movie definition

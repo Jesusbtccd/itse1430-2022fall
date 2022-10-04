@@ -1,4 +1,4 @@
-enum MenuOption
+﻿enum MenuOption
 {
     View = 1,
     Add,
