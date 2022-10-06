@@ -16,6 +16,7 @@ DisplayInformation();
 
 
 Movie movie =null;
+//MovieDatabase database = new MovieDatabase();
 //bool done = false;
 var done = false;
 do
@@ -169,7 +170,7 @@ string ReadString ( string message, bool required )
 Movie AddMovie ()
  {
 
-        Movie movie = new Movie();
+    Movie movie = new Movie("Title");
     //string title = "";
     //movie.title = ReadString("Enter a title: ", true);
 
@@ -180,12 +181,15 @@ Movie AddMovie ()
     movie.Description = ReadString("Enter an optional description: ", false);
 
         //int runlength = 0; //in minutes
-        movie.RunLength = ReadInt32("Enter a run length (in minutes): ", 0, 300);
+    movie.RunLength = ReadInt32("Enter a run length (in minutes): ", 0, 300);
 
-        movie.ReleaseYear = ReadInt32("Enter the release year: ", 1900, 2100);
-        movie.Rating = ReadString("Entering MPAA rating: ", true);
+    movie.ReleaseYear = ReadInt32("Enter the release year: ", 1900, 2100);
+    if (movie.ReleaseYear >= Movie.YearColorWasIntroduced)
+        Console.WriteLine("Wow that is an old movie");
 
-        movie.IsClassic = ReadBoolean("Is this a classic? ");
+    movie.Rating = ReadString("Entering MPAA rating: ", true);
+
+    movie.IsClassic = ReadBoolean("Is this a classic? ");
 
     return movie;
 }
@@ -193,6 +197,7 @@ Movie AddMovie ()
 Movie GetSelectedMovie ()
 {
     //HACK: For now
+    //var item = database.Get(0);
     return movie;
 }
 
@@ -248,6 +253,70 @@ void ViewMovie (Movie movie)
     //Console.WriteLine($"This {(isClassic ? "Is" : "Is Not")} a Classic");
     Console.WriteLine($"Is Classic: {(movie.IsClassic ? "Yes" : "No")}");
     Console.WriteLine(movie.Description);
+
+    var blackAndWhite = movie.IsBlackAndWhite;
+}
+
+void DisplayObject ( object sender )
+{
+    int intValue = 10;
+
+    //Type casting and checking
+    //type checking
+    //1. C-Style cast (T)E
+    // Must be a valid cast
+    //Blows up at runtime if fails
+    string str = (string)sender;
+    //str = (string)intValue;
+
+    //2.Type checking using is ::= E is T
+    // True if valid or false otherwise
+    // Not valid on primitives (other than string)
+    if (sender is string)
+    {
+        //Do something
+        str = (string)sender;
+    };
+
+    //3. Safe type cast using as ::= E as T
+    //  Converts to T if valid or null otherwise
+    //  Doesnt work with primitives ( except string)
+    str = sender as string;
+    if (str != null) { };
+
+    //4. Pattern matching
+    //  Assigns typed E toid and returns true
+    //  Works with any type
+    if (sender is string str1)
+    {
+
+    };
+
+    //5.Convert.ChangeType - DONT USE THIS
+    //      .ToInt32() - DONT USE THIS
+
+    //Null
+    //  Default value for class types
+    //  Member access crashes if instance is null
+    //1. == or != null
+    //str.ToString();
+
+    if (str != null)
+    {
+        var str2 = str.ToString();
+    };
+    var str3 = (str != null) ? str.ToString() : "";
+
+    //3. Null coalescing  ::= E ?? E
+    str3 = str ?? "";   // str ?? str2 ?? str3 ?? "";
+
+    //4. Null conditional ::= instance?.member
+    //  (str !=null) ? str.ToString() : null;
+    str3 = str?.ToString();
+
+    Movie m1 = new Movie(), m2 = new Movie();
+    var areEqual = m1 == m2;
+
 }
 
 //var movie = getselectedMovie();
