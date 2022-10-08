@@ -261,9 +261,11 @@ string ReadProcessor ( string message, string defaultValue = null )
 //string value = Console.ReadLine();
 
         };
+    }
+}
 //if value is not empty or not required
-if (value != "" || !required)
-    return value;
+//if (value != "" || !required)
+    //return value;
 
 if (processor != null)
 {
