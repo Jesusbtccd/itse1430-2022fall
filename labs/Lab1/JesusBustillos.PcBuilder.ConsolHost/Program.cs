@@ -5,12 +5,13 @@
 
 using System.ComponentModel;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.Intrinsics.X86;
 
 string accountName;
 string processor;
 string memory;
 string cart;
-//int releaseYear = 1900;
+string primaryStorage;
 //string rating = "";
 bool isClassic = false;
 
@@ -167,7 +168,7 @@ void AddProcessor ()
 
     memory = ReadMemory("Please select memory type: ");
 
-    //primaryStorage = ReadInt32("Enter the release year: ", 1900, 2100);
+    primaryStorage = ReadStorage("Please select Primary storage capacity: ");
     //secondaryStorage = ReadString("Entering MPAA rating: ", true);
 
     //isClassic = ReadBoolean("Is this a classic? ");
@@ -236,8 +237,8 @@ string ReadProcessor ( string message, string defaultValue = null )
     Console.WriteLine(message);
 
     if (!String.IsNullOrEmpty(defaultValue))
+         Console.WriteLine($"0) Leave unchanged ({defaultValue})");
 
-        Console.WriteLine($"0) Leave unchanged ({defaultValue})");
     Console.WriteLine("1)AMD Ryzen 9 5900X" + " " + "$1410");
     Console.WriteLine("2)AMD Ryzen 7 5700X" + " " + "$1270");
     Console.WriteLine("3)AMD Ryzen 5 5600X" + " " + "1200");
@@ -250,36 +251,37 @@ string ReadProcessor ( string message, string defaultValue = null )
 
         ConsoleKeyInfo key = Console.ReadKey(true);
         switch (key.Key)
-        while (true)
+       
         {
+            case ConsoleKey.NumPad0:
             case ConsoleKey.D0: processor = defaultValue; break;
             case ConsoleKey.D1: processor = "AMD Ryzen 9 5900X" + " " + "$1410"; break;
             case ConsoleKey.D2: processor = "AMD Ryzen 7 5700X" + " " + "$1270"; break;
             case ConsoleKey.D3: processor = "AMD Ryzen 5 5600X" + " " + "1200"; break;
             case ConsoleKey.D4: processor = "Intel i7-12700K" + " " + "1400"; break;
             case ConsoleKey.D5: processor = "Intel i5-12600K" + " " + "1280"; break;
-//string value = Console.ReadLine();
 
-        };
-    }
-}
+
+        
+    
+
 //if value is not empty or not required
 //if (value != "" || !required)
-    //return value;
+            };
 
-if (processor != null)
-{
-    Console.WriteLine(key.KeyChar);
-    return processor;
-    //:value is empty and required
-    Console.WriteLine("Value is required");
-};
-    }
-
+           if (processor != null)
+            {
+                Console.WriteLine(key.KeyChar);
+                return processor;
+                  //:value is empty and required
+                // Console.WriteLine("Value is required");
+            };
+        
         } while (true) ;
         //return defaultValue;
 
-}
+    }
+
 
 string ReadMemory ( string message, string defaultValue = null )
 {
@@ -296,15 +298,18 @@ string ReadMemory ( string message, string defaultValue = null )
     Console.WriteLine("5) 128GB" + " " + "$600");
 
     do
-        void MainMenu ()
-        {
+        
+    {
             string memory = null;
             //string title = "";
-            processor = ReadString("Enter a title: ", true);
+           
 
             var key = Console.ReadKey(true);
             switch (key.Key)
+
+
             {
+                case ConsoleKey.NumPad0:
                 case ConsoleKey.D0: memory = defaultValue; break;
                 case ConsoleKey.D1: memory = "8GB" + " " + "$30"; break;
                 case ConsoleKey.D2: memory = "16GB" + " " + "$40"; break;
@@ -318,10 +323,62 @@ string ReadMemory ( string message, string defaultValue = null )
                 Console.WriteLine(key.KeyChar);
                 return memory;
             };
-        } while (true);
+    } while (true);
 }
+
+string ReadStorage ( string message, string defaultValue = null )
+{
+    Console.WriteLine(message);
+
+    if (!String.IsNullOrEmpty(defaultValue))
+        Console.WriteLine($"0) Leave unchanged ({defaultValue})");
+
+    Console.WriteLine("1)SSD 256 GB" + " " + "$90");
+    Console.WriteLine("2)SSD 512 GB" + " " + "$100");
+    Console.WriteLine("3)SSD 1 TB" + " " + "125");
+    Console.WriteLine("4)SSD 2 TB" + " " + "230");
+   
+
+    do
+    {
+        string primaryStorage = null;
+
+        ConsoleKeyInfo key = Console.ReadKey(true);
+        switch (key.Key)
+
+        {
+            case ConsoleKey.NumPad0:
+            case ConsoleKey.D0: primaryStorage = defaultValue; break;
+            case ConsoleKey.D1: primaryStorage = "SSD 256 GB" + " " + "$90"; break;
+            case ConsoleKey.D2: primaryStorage = "SSD 512 GB"; break;
+            case ConsoleKey.D3: primaryStorage = "SSD 1 TB"; break;
+            case ConsoleKey.D4: primaryStorage = "SSD 2 TB"; break;
+           
+
+
+
+
+
+            //if value is not empty or not required
+            //if (value != "" || !required)
+        };
+
+        if (primaryStorage != null)
+        {
+            Console.WriteLine(key.KeyChar);
+            return primaryStorage;
+            //:value is empty and required
+            // Console.WriteLine("Value is required");
+        };
+
+    } while (true);
+    //return defaultValue;
+
+}
+
+
 //string description = "";
-description = ReadString("Enter an optional description: ", false);
+//description = ReadString("Enter an optional description: ", false);
 
 //int runlength = 0; //in minutes
 
