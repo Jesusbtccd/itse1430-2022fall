@@ -250,7 +250,6 @@ string ReadProcessor ( string message, string defaultValue = null )
 
         ConsoleKeyInfo key = Console.ReadKey(true);
         switch (key.Key)
-        while (true)
         {
             case ConsoleKey.D0: processor = defaultValue; break;
             case ConsoleKey.D1: processor = "AMD Ryzen 9 5900X" + " " + "$1410"; break;
@@ -258,25 +257,24 @@ string ReadProcessor ( string message, string defaultValue = null )
             case ConsoleKey.D3: processor = "AMD Ryzen 5 5600X" + " " + "1200"; break;
             case ConsoleKey.D4: processor = "Intel i7-12700K" + " " + "1400"; break;
             case ConsoleKey.D5: processor = "Intel i5-12600K" + " " + "1280"; break;
-//string value = Console.ReadLine();
+
 
         };
-    }
-}
+    
 //if value is not empty or not required
 //if (value != "" || !required)
     //return value;
 
-if (processor != null)
-{
-    Console.WriteLine(key.KeyChar);
-    return processor;
-    //:value is empty and required
-    Console.WriteLine("Value is required");
-};
-    }
+        if (processor != null)
+        {
+            Console.WriteLine(key.KeyChar);
+            return processor;
+            //:value is empty and required
+            Console.WriteLine("Please make a selection.");
+        };
+        
 
-        } while (true) ;
+    } while (true) ;
         //return defaultValue;
 
 }
@@ -287,8 +285,9 @@ string ReadMemory ( string message, string defaultValue = null )
 
 
     if (!String.IsNullOrEmpty(defaultValue))
-
         Console.WriteLine($"0) Leave unchanged ({defaultValue})");
+
+
     Console.WriteLine("1) 8GB" + " " + "$30");
     Console.WriteLine("2) 16GB" + " " + "$40");
     Console.WriteLine("3) 32GB" + " " + "$90");
@@ -296,7 +295,7 @@ string ReadMemory ( string message, string defaultValue = null )
     Console.WriteLine("5) 128GB" + " " + "$600");
 
     do
-        void MainMenu ()
+        
         {
             string memory = null;
             //string title = "";
@@ -320,10 +319,6 @@ string ReadMemory ( string message, string defaultValue = null )
             };
         } while (true);
 }
-//string description = "";
-description = ReadString("Enter an optional description: ", false);
-
-//int runlength = 0; //in minutes
 
 
 void ViewItem ()
