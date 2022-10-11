@@ -37,6 +37,7 @@
             this._miMovieDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._miHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,6 +83,7 @@
             this._miMovieAdd.ShortcutKeys = System.Windows.Forms.Keys.Insert;
             this._miMovieAdd.Size = new System.Drawing.Size(180, 22);
             this._miMovieAdd.Text = "&Add";
+            this._miMovieAdd.Click += new System.EventHandler(this.OnMovieAdd);
             // 
             // _miMovieEdit
             // 
@@ -95,6 +97,7 @@
             this._miMovieDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this._miMovieDelete.Size = new System.Drawing.Size(180, 22);
             this._miMovieDelete.Text = "&Delete";
+            this._miMovieDelete.Click += new System.EventHandler(this._miMovieDelete_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -108,14 +111,24 @@
             // 
             this._miHelpAbout.Name = "_miHelpAbout";
             this._miHelpAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this._miHelpAbout.Size = new System.Drawing.Size(180, 22);
+            this._miHelpAbout.Size = new System.Drawing.Size(126, 22);
             this._miHelpAbout.Text = "&About";
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 15;
+            this.listBox1.Location = new System.Drawing.Point(12, 33);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(776, 409);
+            this.listBox1.TabIndex = 1;
             // 
             // Mainform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Mainform";
@@ -138,5 +151,6 @@
         private ToolStripMenuItem _miMovieDelete;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem _miHelpAbout;
+        private ListBox listBox1;
     }
 }
