@@ -19,9 +19,27 @@ namespace MovieLibrary.WinHost
 
         public Movie SelectedMovie { get; set; }
 
+        protected override void OnLoad ( EventArgs e )
+        {
+            base.OnLoad(e);
+
+            //Do any init just before UI is renderd
+            if (SelectedMovie != null )
+            {
+                //Load Ui
+                _txtTitle.Text = SelectedMovie.Title;
+                _txtDescription.Text = SelectedMovie.Description;
+                _cbRating.Text = SelectedMovie.Rating;
+
+                _chkIsClassic.Checked = SelectedMovie.IsClassic;
+                _txtRunLength.Text = SelectedMovie.RunLength.ToString();
+                _txtReleaseYear.Text = SelectedMovie.ReleaseYear.ToString();
+            };
+        }
+
         private void OnSave ( object sender, EventArgs e )
         {
-            //todo : sadd validation
+            //todo : add validation
             var movie = new Movie();
             movie.Title = _txtTitle.Text;
             movie.Description = _txtDescription.Text;
@@ -31,26 +49,26 @@ namespace MovieLibrary.WinHost
             movie.RunLength = GetInt32(_txtRunLength);
             movie.ReleaseYear = GetInt32(_txtReleaseYear);
 
-            if (movie.Title.Length == 0)
+            if (!movie.Validate(out var error))
             {
-                DisplayError("Title is required", "Save");
+                DisplayError(error, "Save");
                 return;
             };
-            if (movie.Rating.Length == 0)
-            {
-                DisplayError("Rating is required", "Save");
-                return;
-            };
-            if (movie.RunLength < 0)
-            {
-                DisplayError("Run Length must be >= 0", "Save");
-                return;
-            };
-            if (movie.ReleaseYear < 1900)
-            {
-                DisplayError("Release Year must be >= 1900", "Save");
-                return;
-            };
+           //// if (movie.Rating.Length == 0)
+           // {
+           //     DisplayError("Rating is required", "Save");
+           //     return;
+           // };
+           // //if (movie.RunLength < 0)
+           // {
+           //     DisplayError("Run Length must be >= 0", "Save");
+           //     return;
+           // };
+           // //if (movie.ReleaseYear < 1900)
+           // {
+           //     DisplayError("Release Year must be >= 1900", "Save");
+           //     return;
+           // };
             //get rid of from
             //setting forms dialogresult to a reasonable value
             // call Close()
@@ -73,6 +91,6 @@ namespace MovieLibrary.WinHost
             return -1;
         }
 
-
+       
     }
 }
