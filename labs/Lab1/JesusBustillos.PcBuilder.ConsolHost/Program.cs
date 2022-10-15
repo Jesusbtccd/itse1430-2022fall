@@ -6,14 +6,15 @@
 using System.ComponentModel;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Intrinsics.X86;
+using System.Xml.Linq;
 
 string accountName;
 string processor;
 string memory;
-string cart;
+//string cart;
 string primaryStorage;
-//string rating = "";
-bool isClassic = false;
+string secondaryStorage;
+//bool isClassic = false;
 
 
 DisplayInformation();
@@ -61,7 +62,6 @@ AddProcessor();
 MenuOption DisplayMenu ()
 {
     Console.WriteLine();
-    //Console.WriteLine("----------");
     Console.WriteLine("".PadLeft(10, '-'));
     Console.WriteLine("A)dd Processor");
     Console.WriteLine("E)dit Cart");
@@ -83,10 +83,57 @@ MenuOption DisplayMenu ()
             case ConsoleKey.D: Console.WriteLine(); return MenuOption.Delete;
             case ConsoleKey.Q: Console.WriteLine(); return MenuOption.Quit;
 
-            default: Error("Please enter valid option"); break;
+            //default: Error("Please enter valid option"); break;
         };
     } while (true);
 }
+
+bool ItemCart ()
+{
+    return !String.IsNullOrWhiteSpace(accountName);
+}
+
+
+//bool Exit ()
+//{
+//    return Confirm("Are you sure you want exit menu? ");
+//}
+
+//bool Confirm ( string message )
+//{
+//    Console.Write($"{message} (Y/N) ");
+
+//    do
+//    {
+//        var key = Console.ReadKey(true);
+//        switch (key.Key)
+//        {
+//            case ConsoleKey.Y: Console.WriteLine(key.KeyChar); return true;
+//            case ConsoleKey.N: Console.WriteLine(key.KeyChar); return false;
+//        };
+//    } while (true);
+//    //isClassic = ReadBoolean("Is this a classic? ");
+//}
+
+
+//void ViewCart ()
+//{
+//    if (!ItemCart())
+//    {
+//        Error("No items in cart");
+//        return;
+//    };
+
+//    Console.WriteLine(accountName);
+//    Console.WriteLine($"{processor}");
+//    Console.WriteLine($"{memory}");
+//    Console.WriteLine($"{primaryStorage}");
+//    Console.WriteLine($"{secondaryStorage}");
+
+    //if (!String.IsNullOrEmpty(cart))
+    //    Console.WriteLine(cart);
+//}
+
 
 
 
@@ -106,73 +153,19 @@ bool ReadBoolean ( string message )
         else if (key.Key == ConsoleKey.N)
             return false;
     } while (true);
-    //TODO:ERROR
-    //return false;
-    //ConsoleKeyInfo key = Console.ReadKey();
-    //if (key.Key == ConsoleKey.Y)
-    //    return true;
-    //else if (key.Key == ConsoleKey.N)
-    //    return false;
-
-    //return false;
+   
 }
-
-int ReadInt32 ( string message, int minimumValue, int maximumValue )
-{
-    Console.Write(message);
-
-    do
-    {
-        string value = Console.ReadLine();
-        if (Int32.TryParse(value, out int result))
-        {
-            if (result >= minimumValue && result <= maximumValue)
-                return result;
-        };
-
-
-
-        Console.WriteLine("Value must be between " + minimumValue + " and " + maximumValue);
-    } while (true);
-
-
-
-}
-
-string ReadString ( string message, bool required )
-{
-
-    Console.Write(message);
-
-    while (true)
-
-    {
-        string value = Console.ReadLine();
-
-        //if value is not empty or not required
-        if (value != "" || !required)
-            return value;
-        Console.Write(message);
-
-        //:value is empty and required
-        Console.WriteLine("Value is required");
-    };
-}
-
 
 void AddProcessor ()
 {
     accountName = ReadString("Enter an account name:", true);
-
     processor = ReadProcessor("Please select a processor:");
-
     memory = ReadMemory("Please select memory type: ");
-
     primaryStorage = ReadStorage("Please select Primary storage capacity: ");
-    //secondaryStorage = ReadString("Entering MPAA rating: ", true);
+    secondaryStorage = ReadSecstore("Please select Secondary storage capacity: ");
 
-    //isClassic = ReadBoolean("Is this a classic? ");
 }
+
 
 void DeleteItem ()
 {
@@ -185,6 +178,9 @@ void DeleteItem ()
     if (!ReadBoolean("Are you sure you want to remove item from cart (Y/N)?"))
         return;
     processor = "";
+    memory = "";
+    primaryStorage = "";
+    secondaryStorage = "";
 }
 
 void EditCart ()
@@ -195,8 +191,19 @@ void EditCart ()
         return;
     };
 
+    //accountName = ReadString($"Enter a name or press ENTER to leave at '{accountName}': ", false, accountName);
+
+    processor = ReadProcessor("Please select a processor:", processor);
+
+    memory = ReadMemory("Please select memory type: ", memory);
+
+    primaryStorage = ReadStorage("Please select Primary storage capacity: ", primaryStorage);
+    secondaryStorage = ReadSecstore("Please select Secondary storage capacity: ", secondaryStorage);
+
 
 }
+
+
 
 void ViewCart ()
 {
@@ -206,31 +213,21 @@ void ViewCart ()
         return;
     };
 
-    //Console.WriteLine(accountName);
-    //Console.WriteLine($"{processor}");
-    //Console.WriteLine($"{memory}");
-    //Console.WriteLine($"{primaryStorage});
-    //Console.WriteLine($"{secondaryStorage});
+    Console.WriteLine(accountName);
+    Console.WriteLine($"{processor}");
+    Console.WriteLine($"{memory}");
+    Console.WriteLine($"{primaryStorage}");
+    Console.WriteLine($"{secondaryStorage}");
 
     //if (!String.IsNullOrEmpty(cart))
     //    Console.WriteLine(cart);
 }
 
+bool Exit ()
+{
+    return Confirm("Exit menu? ");
+}
 
-//string formatting
-//option 1 - concatenaation 
-//console.writeline(Lentgh; " + runLength + " mins");
-
-//option 2 - string.format
-//to string
-//Console.WriteLine(releaseYear);
-//Console.WriteLine(releaseYear.ToString());
-//Console.WriteLine(description);
-//Console.WriteLine("Length: "+ runLength + " mins");
-
-//Console.WriteLine(String.Format("Length: {0} mins", runLength));
-//Console.WriteLine("MPAA Rating: " + rating);
-//Console.WriteLine("Classic: " + isClassic);
 
 string ReadProcessor ( string message, string defaultValue = null )
 {
@@ -265,8 +262,8 @@ string ReadProcessor ( string message, string defaultValue = null )
         
     
 
-//if value is not empty or not required
-//if (value != "" || !required)
+                //if value is not empty or not required
+                //if (value != "" || !required)
             };
 
            if (processor != null)
@@ -302,9 +299,7 @@ string ReadMemory ( string message, string defaultValue = null )
         
     {
             string memory = null;
-            //string title = "";
-           
-
+          
             var key = Console.ReadKey(true);
             switch (key.Key)
 
@@ -377,6 +372,91 @@ string ReadStorage ( string message, string defaultValue = null )
 
 }
 
+string ReadSecstore ( string message, string defaultValue = null )
+{
+    Console.WriteLine(message);
+
+    if (!String.IsNullOrEmpty(defaultValue))
+        Console.WriteLine($"0) Leave unchanged ({defaultValue})");
+
+    Console.WriteLine("1)SSD 256 GB" + " " + "$90");
+    Console.WriteLine("2)SSD 512 GB" + " " + "$100");
+    Console.WriteLine("3)SSD 1 TB" + " " + "125");
+    Console.WriteLine("4)SSD 2 TB" + " " + "230");
+
+
+    do
+    {
+        string secondaryStorage = null;
+
+        ConsoleKeyInfo key = Console.ReadKey(true);
+        switch (key.Key)
+
+        {
+            case ConsoleKey.NumPad0:
+            case ConsoleKey.D0: secondaryStorage = defaultValue; break;
+            case ConsoleKey.D1: secondaryStorage = "SSD 256 GB" + " " + "$90"; break;
+            case ConsoleKey.D2: secondaryStorage = "SSD 512 GB"; break;
+            case ConsoleKey.D3: secondaryStorage = "SSD 1 TB"; break;
+            case ConsoleKey.D4: secondaryStorage = "SSD 2 TB"; break;
+
+            //if value is not empty or not required
+            //if (value != "" || !required)
+        };
+
+        if (secondaryStorage != null)
+        {
+            Console.WriteLine(key.KeyChar);
+            return secondaryStorage;
+            //:value is empty and required
+            // Console.WriteLine("Value is required");
+        };
+
+    } while (true);
+    //return defaultValue;
+}
+
+int ReadInt32 ( string message, int minimumValue, int maximumValue )
+{
+    Console.Write(message);
+
+    do
+    {
+        string value = Console.ReadLine();
+        if (Int32.TryParse(value, out int result))
+        {
+            if (result >= minimumValue && result <= maximumValue)
+                return result;
+        };
+
+
+
+        Console.WriteLine("Value must be between " + minimumValue + " and " + maximumValue);
+    } while (true);
+
+
+
+}
+
+string ReadString ( string message, bool required )
+{
+
+    Console.Write(message);
+
+    while (true)
+
+    {
+        string value = Console.ReadLine();
+
+        //if value is not empty or not required
+        if (value != "" || !required)
+            return value;
+        Console.Write(message);
+
+        //:value is empty and required
+        Console.WriteLine("Value is required");
+    };
+}
 
 //string description = "";
 //description = ReadString("Enter an optional description: ", false);
@@ -384,17 +464,17 @@ string ReadStorage ( string message, string defaultValue = null )
 //int runlength = 0; //in minutes
 
 
-void ViewItem ()
-{
-    if (!ItemCart())
-    {
-        Error("No items in cart");
-        return;
-    };
+//void ViewItem ()
+//    {
+//        if (!ItemCart())
+//        {
+//            Error("No items in cart");
+//            return;
+//        };
 
-    //Console.WriteLine(yourCart);
-    //Console.WriteLine($"{})
-}
+//        //Console.WriteLine(yourCart);
+//        //Console.WriteLine($"{})
+//    }
 
 
 void Error ( string message )
@@ -402,10 +482,10 @@ void Error ( string message )
     Console.WriteLine(message);
 }
 
-bool ItemCart ()
-{
-    return true;
-}
+//bool ItemCart ()
+//{
+//    return !String.IsNullOrWhiteSpace(accountName);
+//}
 
 bool Confirm ( string message )
 {
@@ -420,13 +500,12 @@ bool Confirm ( string message )
             case ConsoleKey.N: Console.WriteLine(key.KeyChar); return false;
         };
     } while (true);
-    //isClassic = ReadBoolean("Is this a classic? ");
 }
 
-bool Exit ()
-{
-    return Confirm("Are you sure you want exit menu? ");
-}
+//bool Exit ()
+//{
+//    return Confirm("Are you sure you want exit menu? ");
+//}
 
 
 
