@@ -29,10 +29,10 @@ do
     switch (DisplayMenu())
     {
 
-        case MenuOption.Add: AddProcessor(); break;
+        case MenuOption.Add: AddItems(); break;
         case MenuOption.Edit: EditCart(); break;
         case MenuOption.View: ViewCart(); break;
-        case MenuOption.Delete: DeleteItem(); break;
+        case MenuOption.Delete: DeleteItems(); break;
         case MenuOption.Quit: done = Exit(); break;
 
     };
@@ -44,16 +44,16 @@ do
 
 DisplayMenu();
 
-AddProcessor();
+AddItems();
 
 MenuOption DisplayMenu ()
 {
     Console.WriteLine();
     Console.WriteLine("".PadLeft(10, '-'));
-    Console.WriteLine("A)dd Processor");
+    Console.WriteLine("A)dd Items");
     Console.WriteLine("E)dit Cart");
     Console.WriteLine("V)iew Cart");
-    Console.WriteLine("D)elete Item");
+    Console.WriteLine("D)elete Items");
     Console.WriteLine("Q)uit");
 
 
@@ -131,7 +131,7 @@ string ReadString ( string message, bool required )
 }
 
 
-void AddProcessor ()
+void AddItems ()
 {
     accountName = ReadString("Enter an account name:", true);
     processor = ReadProcessor("Please select a processor:");
@@ -143,7 +143,7 @@ void AddProcessor ()
 
 }
 
-void DeleteItem ()
+void DeleteItems ()
 {
     if (!ItemCart())
     {
@@ -151,9 +151,9 @@ void DeleteItem ()
         return;
     };
 
-    if (!ReadBoolean("Are you sure you want to remove item from cart (Y/N)?"))
+    if (!ReadBoolean("Are you sure you want to remove items from cart (Y/N)?"))
         return;
-    processor = "";
+    
 }
 
 void EditCart ()
@@ -164,6 +164,9 @@ void EditCart ()
         return;
     };
 
+    if (Confirm($"Are you sure you want to edit '{accountName}'?"))
+        accountName = "";
+       
 
 }
 
@@ -182,8 +185,6 @@ void ViewCart ()
     Console.WriteLine($"{secondaryStorage}");
     Console.WriteLine($"Your total in cart is: {userTotal}");
 
-    //if (!String.IsNullOrEmpty(cart))
-    //    Console.WriteLine(cart);
 }
 
 string ReadProcessor ( string message, string defaultValue = null )
@@ -281,8 +282,8 @@ string ReadStorage ( string message, string defaultValue = null )
 
     Console.WriteLine("1)SSD 256 GB" + " " + "$90");
     Console.WriteLine("2)SSD 512 GB" + " " + "$100");
-    Console.WriteLine("3)SSD 1 TB" + " " + "125");
-    Console.WriteLine("4)SSD 2 TB" + " " + "230");
+    Console.WriteLine("3)SSD 1 TB" + " " + "$125");
+    Console.WriteLine("4)SSD 2 TB" + " " + "$230");
 
 
     do
@@ -381,8 +382,8 @@ string ReadCard ( string message, string defaultValue = null )
     Console.WriteLine("1)None" + " " + "$0");
     Console.WriteLine("2)GeForce RTX 3070" + " " + "$580");
     Console.WriteLine("3)GeForce RTX 2070" + " " + "$400");
-    Console.WriteLine("4)Radeon RX 6600" + " " + "300");
-    Console.WriteLine("5)Radeon RX 5600" + " " + "325");
+    Console.WriteLine("4)Radeon RX 6600" + " " + "$300");
+    Console.WriteLine("5)Radeon RX 5600" + " " + "$325");
 
 
     do
@@ -424,10 +425,10 @@ string ReadSystem ( string message, string defaultValue = null )
 
     Console.WriteLine("1)Windows 11 Home" + " " + "$140");
     Console.WriteLine("2)Windows 11 Pro" + " " + "$160");
-    Console.WriteLine("3)Windows 10 Home" + " " + "150");
-    Console.WriteLine("4)Windows 10 Pro" + " " + "170");
-    Console.WriteLine("5)Linux(Fedora)" + " " + "20");
-    Console.WriteLine("6)Linux(Red Hat)" + " " + "60");
+    Console.WriteLine("3)Windows 10 Home" + " " + "$150");
+    Console.WriteLine("4)Windows 10 Pro" + " " + "$170");
+    Console.WriteLine("5)Linux(Fedora)" + " " + "$20");
+    Console.WriteLine("6)Linux(Red Hat)" + " " + "$60");
 
 
     do
