@@ -60,6 +60,7 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
+            this.fileToolStripMenuItem.Click += new System.EventHandler(this.OnFileExit);
             // 
             // exitToolStripMenuItem
             // 
@@ -81,14 +82,14 @@
             // 
             this._miMovieAdd.Name = "_miMovieAdd";
             this._miMovieAdd.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this._miMovieAdd.Size = new System.Drawing.Size(180, 22);
+            this._miMovieAdd.Size = new System.Drawing.Size(131, 22);
             this._miMovieAdd.Text = "&Add";
             this._miMovieAdd.Click += new System.EventHandler(this.OnMovieAdd);
             // 
             // _miMovieEdit
             // 
             this._miMovieEdit.Name = "_miMovieEdit";
-            this._miMovieEdit.Size = new System.Drawing.Size(180, 22);
+            this._miMovieEdit.Size = new System.Drawing.Size(131, 22);
             this._miMovieEdit.Text = "&Edit";
             this._miMovieEdit.Click += new System.EventHandler(this.OnMovieEdit);
             // 
@@ -96,7 +97,7 @@
             // 
             this._miMovieDelete.Name = "_miMovieDelete";
             this._miMovieDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this._miMovieDelete.Size = new System.Drawing.Size(180, 22);
+            this._miMovieDelete.Size = new System.Drawing.Size(131, 22);
             this._miMovieDelete.Text = "&Delete";
             this._miMovieDelete.Click += new System.EventHandler(this._miMovieDelete_Click);
             // 
@@ -114,14 +115,16 @@
             this._miHelpAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this._miHelpAbout.Size = new System.Drawing.Size(126, 22);
             this._miHelpAbout.Text = "&About";
+            this._miHelpAbout.Click += new System.EventHandler(this.OnHelpAbout);
             // 
             // _lstMovies
             // 
+            this._lstMovies.Dock = System.Windows.Forms.DockStyle.Fill;
             this._lstMovies.FormattingEnabled = true;
             this._lstMovies.ItemHeight = 15;
-            this._lstMovies.Location = new System.Drawing.Point(12, 33);
+            this._lstMovies.Location = new System.Drawing.Point(0, 24);
             this._lstMovies.Name = "_lstMovies";
-            this._lstMovies.Size = new System.Drawing.Size(776, 409);
+            this._lstMovies.Size = new System.Drawing.Size(800, 426);
             this._lstMovies.TabIndex = 1;
             // 
             // Mainform

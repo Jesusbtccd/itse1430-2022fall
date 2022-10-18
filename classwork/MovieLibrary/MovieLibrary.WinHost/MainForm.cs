@@ -14,7 +14,7 @@ namespace MovieLibrary.WinHost
             var child = new MovieForm();
 
             //showing form modally
-            if (child.ShowDialog() != DialogResult.OK)  
+            if (child.ShowDialog(this) != DialogResult.OK)  
                 return;
             //child.Show();
 
@@ -73,12 +73,12 @@ namespace MovieLibrary.WinHost
 
         private bool Confirm ( string message, string title)
         {
-            DialogResult result = MessageBox.Show(message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show(this, message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             return result == DialogResult.Yes;
         }
         private void DisplayError ( string message, string title)
         {
-            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(this, message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void _miMovieDelete_Click ( object sender, EventArgs e )
@@ -106,6 +106,18 @@ namespace MovieLibrary.WinHost
             //todo: Save this off
             _movie = child.SelectedMovie;
             UpdateUI();
+        }
+
+        private void OnFileExit ( object sender, EventArgs e )
+        {
+            Close();
+        }
+
+        private void OnHelpAbout ( object sender, EventArgs e )
+        {
+            var about = new AboutForm();
+
+            about .ShowDialog();
         }
     }
 }
