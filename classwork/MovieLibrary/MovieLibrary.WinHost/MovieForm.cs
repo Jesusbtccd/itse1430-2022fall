@@ -23,8 +23,9 @@ namespace MovieLibrary.WinHost
         {
             base.OnLoad(e);
 
+
             //Do any init just before UI is renderd
-            if (SelectedMovie != null )
+            if (SelectedMovie != null)
             {
                 //Load Ui
                 _txtTitle.Text = SelectedMovie.Title;
@@ -35,10 +36,19 @@ namespace MovieLibrary.WinHost
                 _txtRunLength.Text = SelectedMovie.RunLength.ToString();
                 _txtReleaseYear.Text = SelectedMovie.ReleaseYear.ToString();
             };
+
+            //force validation
+            ValidateChildren();
         }
 
         private void OnSave ( object sender, EventArgs e )
         {
+            //FormClosedEventArgs validation of children
+            if (!ValidateChildren())
+                return;
+
+            var btn = sender as Button;
+
             //todo : add validation
             var movie = new Movie();
             movie.Title = _txtTitle.Text;
@@ -54,21 +64,21 @@ namespace MovieLibrary.WinHost
                 DisplayError(error, "Save");
                 return;
             };
-           //// if (movie.Rating.Length == 0)
-           // {
-           //     DisplayError("Rating is required", "Save");
-           //     return;
-           // };
-           // //if (movie.RunLength < 0)
-           // {
-           //     DisplayError("Run Length must be >= 0", "Save");
-           //     return;
-           // };
-           // //if (movie.ReleaseYear < 1900)
-           // {
-           //     DisplayError("Release Year must be >= 1900", "Save");
-           //     return;
-           // };
+            //// if (movie.Rating.Length == 0)
+            // {
+            //     DisplayError("Rating is required", "Save");
+            //     return;
+            // };
+            // //if (movie.RunLength < 0)
+            // {
+            //     DisplayError("Run Length must be >= 0", "Save");
+            //     return;
+            // };
+            // //if (movie.ReleaseYear < 1900)
+            // {
+            //     DisplayError("Release Year must be >= 1900", "Save");
+            //     return;
+            // };
             //get rid of from
             //setting forms dialogresult to a reasonable value
             // call Close()
@@ -95,5 +105,76 @@ namespace MovieLibrary.WinHost
         {
 
         }
+
+        private void OnValidateTitle ( object sender, System.ComponentModel.CancelEventArgs e )
+        {
+            var control = sender as TextBox;
+
+            if (String.IsNullOrEmpty(control.Text))
+            {
+                //not valid
+                _errors.SetError(control, "Title is required");
+                e.Cancel = true;
+            } else
+            {
+                //valid
+                _errors.SetError(control, "");
+            };
+        }
+
+
+
+        private void OnValidateRating ( object sender, System.ComponentModel.CancelEventArgs e )
+        {
+            var control = sender as ComboBox;
+
+            if (String.IsNullOrEmpty(control.Text))
+            {
+                //not valid
+                _errors.SetError(control, "Title is required");
+                e.Cancel = true;
+            } else
+            {
+                //valid
+                _errors.SetError(control, "");
+            };
+        }
+
+        private void OnValidateRunLength ( object sender, System.ComponentModel.CancelEventArgs e )
+        {
+            var control = sender as TextBox;
+
+            var value = GetInt32(control);
+            if (value < 0)
+            {
+                //not valid
+                _errors.SetError(control, "Run length must be >= 0");
+                e.Cancel = true;
+            } else
+            {
+                //valid
+                _errors.SetError(control, "");
+            };
+        }
+
+        private void OnValidateReleaseYear ( object sender, System.ComponentModel.CancelEventArgs e )
+        {
+            var control = sender as TextBox;
+
+            var value = GetInt32(control);
+            if (value < 1900)
+            {
+                //not valid
+                _errors.SetError(control, "Release Year must be at least 1900");
+                e.Cancel = true;
+            } else
+            {
+                //valid
+                _errors.SetError(control, "");
+            };
+        }
     }
+
 }
+
+
