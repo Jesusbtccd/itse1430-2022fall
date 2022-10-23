@@ -6,14 +6,16 @@ namespace JesusBustillos.CharacterCreator
 {
     public class Character
     {
-        enum MenuOption
-        {
-            View = 1,
-            Add,
-            Edit,
-            Delete,
-            Quit,
+        
+    }
 
-        }
+    public enum MenuOption
+    {
+        View = 1,
+        Add,
+        Edit,
+        Delete,
+        Quit,
+
     }
 }
