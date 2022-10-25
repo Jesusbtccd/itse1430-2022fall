@@ -43,7 +43,7 @@
         //}
 
         /// <summary>Gets the unique ID.</summary>
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         /// <summary>Gets or sets the title.</summary>
         public string Title
@@ -145,7 +145,7 @@
         public void CopyTo ( /* Movie this */ Movie movie )
         {
             //var areEqual = title == this.title;
-
+            movie.Id = Id;
             movie.Title = Title;
             movie.Description = Description; //this.description
             movie.RunLength = RunLength;

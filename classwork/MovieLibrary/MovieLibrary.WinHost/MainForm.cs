@@ -9,23 +9,30 @@ namespace MovieLibrary.WinHost
             InitializeComponent();
         }
 
-        private void OnMovieAdd (object sender, EventArgs e)
+        private void OnMovieAdd ( object sender, EventArgs e )
         {
             var child = new MovieForm();
 
-            //showing form modally
-            if (child.ShowDialog(this) != DialogResult.OK)  
-                return;
-            //child.Show();
+            do
+            {
 
-            //todo: Save this off
-            _movie = child.SelectedMovie;
-            UpdateUI();
-            
+                //showing form modally
+                if (child.ShowDialog(this) != DialogResult.OK)
+                    return;
+                //child.Show();
+
+                //todo: Save this off
+                if (_movies.Add(child.SelectedMovie, out var error) != null)
+                {
+                    UpdateUI();
+                    return;
+                };
+
+                DisplayError(error, "Add Failed");
+            } while (true);
         }
-
         private Movie _movie;
-        private MovieDataBase _movies = new Movie;
+        private MovieDatabase _movies = new MovieDatabase();
 
         private void OnMovieDelete (object sender, EventArgs e)
         {
@@ -38,7 +45,7 @@ namespace MovieLibrary.WinHost
 
             //TODO: Implement
             //DisplayError("Not implemented yet", "Delete");
-            _movie = null;
+            _movies.Remove(movie.Id);
             UpdateUI();
         }
 
@@ -62,7 +69,6 @@ namespace MovieLibrary.WinHost
         {
 
             var movies = _movies.GetAll();
-            movies[0].Title = "New Movie";
 
             _lstMovies.Items.Clear();
             _lstMovies.Items.AddRange(movies);
@@ -85,11 +91,18 @@ namespace MovieLibrary.WinHost
 
         private void _miMovieDelete_Click ( object sender, EventArgs e )
         {
+            var movie = GetSelectedMovie();
+            if (movie == null)
+                return;
+
             if (!Confirm("Are you sure you want to delete the movie?", "Delete"))
                 return;
 
-            //TODO :IMPLEMENT
-            DisplayError("Not implemented yet", "Delete");
+            _movies.Remove(movie.Id);
+            UpdateUI();
+
+            ////TODO :IMPLEMENT
+            //DisplayError("Not implemented yet", "Delete");
         }
 
         private void OnMovieEdit ( object sender, EventArgs e )
@@ -97,17 +110,28 @@ namespace MovieLibrary.WinHost
             var movie = GetSelectedMovie();
             if (movie == null)
                 return;
+
             var child = new MovieForm();
             child.SelectedMovie = movie;
 
-            //showing form modally
-            if (child.ShowDialog() != DialogResult.OK)
-                return;
-            //child.Show();
+            do
+            {
+                //showing form modally
+                if (child.ShowDialog() != DialogResult.OK)
+                    return;
+                //child.Show();
+                if (_movies.Update(movie.Id, child.SelectedMovie, out var error))
+                {
+                    UpdateUI();
+                    return;
+                };
 
-            //todo: Save this off
-            _movie = child.SelectedMovie;
-            UpdateUI();
+                DisplayError(error, "Update Failed");
+
+                ////todo: Save this off
+                //_movie = child.SelectedMovie;
+                //UpdateUI();
+            } while (true);
         }
 
         private void OnFileExit ( object sender, EventArgs e )
