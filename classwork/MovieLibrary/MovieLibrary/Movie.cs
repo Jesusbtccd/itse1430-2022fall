@@ -1,16 +1,16 @@
-﻿namespace MovieLibrary
+﻿/*
+ * Name
+ * Lab
+ * Fall 2022
+ */
+using System.ComponentModel.DataAnnotations;
+
+namespace MovieLibrary
 {
     /// <summary>Represents a movie.</summary>
-    public class Movie
+    public class Movie : IValidatableObject
     {
-        //Constructors
-        // Used to do complex init outside what field init can do
-        // Historically used to set common properties but not anymore
-        // Can be used to init required properties that cannot be set
-        // Readonly fields can be written in ctors
-        //
-        //ctor-decl :: [access] T ( parameters ) { S* }
-        //Default constructor - auto created unless you define your own constructors
+        /// <summary>Represents a movie.</summary>
         public Movie () : this("", "")
         {
             //Initialize("", "");
@@ -190,6 +190,41 @@
             //var str = base.ToString();  //Calls base type impl
             return Title;
         }
+
+        public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
+        {
+            var errors = new List<ValidationResult>();
+
+            if (Title.Length == 0)
+                errors.Add(new ValidationResult("Title is required", new[] { nameof(Title) } ));
+            {
+                errorMessage = "Title is required";
+                return false;
+            };
+            if (Rating.Length == 0)
+                errors.Add(new ValidationResult("Title is required", new[] { nameof(Rating) }));
+            {
+                errorMessage = "Rating is required";
+                return false;
+            };
+            if (RunLength < 0)
+                errors.Add(new ValidationResult("Title is required", new[] { nameof(RunLength) }));
+            {
+                errorMessage = "Run Length must be >= 0";
+                return false;
+            };
+            if (ReleaseYear < 1900)
+                errors.Add(new ValidationResult("Release ", new[] { nameof(ReleaseYear) }));
+            {
+                errorMessage = "Release Year must be >= 1900";
+                return false;
+            };
+
+            errorMessage = null;
+            return true;
+        }
+    }
+       
     }
 }
 

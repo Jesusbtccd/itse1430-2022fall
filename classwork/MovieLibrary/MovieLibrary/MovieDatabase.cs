@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,87 @@ namespace MovieLibrary
 {
     public class MovieDatabase
     {
-       
+        public MovieDatabase ()
+        {
+            //{
+            //var movies = new Movie[3];
+            //    //Object initializer syntax
+            //    //new Movie("Jaws", "PG");
+            //    //var movie = new Movie();
+            //    //movie.Title = "Jaws";
+            //    //movie.Rating = "PG";
+            //    //movie.RunLength = 210;
+            //    //movie.ReleaseYear = 1977;
+            //    //movie.Description = "Shark eats people";
+            //    //movie.IsClassic = true;
+            //    movie = new Movie() {
+            //        Title = "Jaws",
+            //        Rating = "PG",
+            //        RunLength = 210,
+            //        ReleaseYear = 1977,
+            //        Description = "Shark eats people",
+            //        IsClassic = true,
+            //    };
+
+            //Add ( movie, out var error );
+
+            //movie = new Movie ()
+            //{
+            //    Title = "Jaws 2",
+            //        Rating = "PG-13",
+            //        RunLength = 220,
+            //        ReleaseYear = 1979,
+            //        Description = "Shark eats people...again"
+            //    };
+            //Add ( movie, out error);
+
+            //movie = new Movie ()
+            //{
+            //    Title = "Dune",
+            //                Rating = "PG-13",
+            //                RunLength = 320,
+            //                ReleaseYear = 1985,
+            //                Description = "Based on book",
+            //            };
+            //Add ( movie, out error);
+
+
+
+            var movies = new Movie[] {
+               new Movie(){
+                    Title = "Jaws",
+                    Rating = "PG",
+                    RunLength = 210,
+                    ReleaseYear = 1977,
+                    Description = "Shark eats people",
+                    IsClassic = true,
+               },
+
+               new Movie(){
+                    Title = "Jaws 2",
+                    Rating = "PG-13",
+                    RunLength = 210,
+                    ReleaseYear = 1977,
+                    Description = "Shark eats people",
+
+               },
+
+                new Movie(){
+                    Title = "Dune",
+                    Rating = "PG-13",
+                    RunLength = 320,
+                    ReleaseYear = 1979,
+                    Description = "Based on book",
+
+                }
+                };
+
+                 foreach (var movie in movies)
+                        Add(movie, out var error);
+            
+    
+        }
+
         public virtual Movie Add ( Movie movie, out string errorMessage)
         {
             //Array
@@ -23,7 +104,10 @@ namespace MovieLibrary
                 errorMessage = "Movie cannot be null";
                 return null;
             };
-            if (!movie.Validate(out errorMessage))
+
+            var results = new List<ValidationResults>();
+           // Validator.TryValidateObject(movie, new ValidationContext(movie), results, true)
+            if (Validator.TryValidateObject(movie, new ValidationContext(movie), results, true)
                 return null;
 
             var existing = FindByTitle(movie.Title);
