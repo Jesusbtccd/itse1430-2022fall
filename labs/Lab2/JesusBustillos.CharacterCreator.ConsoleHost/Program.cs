@@ -4,10 +4,10 @@
 
 using JesusBustillos.CharacterCreator;
 
-string characterName = "";
-string characterProfession = "";
-string characterRace = "";
-string characterBiography = "";
+string characterName;
+string characterProfession;
+string characterRace;
+string characterBiography;
 int characterStrength, characterIntelligence, characterAgility, characterConstitution, characterCharisma;
 const int minAttribute = 1;
 const int maxAttribute = 100;
@@ -80,44 +80,44 @@ MenuOption DisplayMenu ()
 }
 
 
-bool ReadBoolean ( string message )
-{
-    Console.Write(message);
+//bool ReadBoolean ( string message )
+//{
+//    Console.Write(message);
 
-    do
-    {
-        ConsoleKeyInfo key = Console.ReadKey();
-        if (key.Key == ConsoleKey.Y)
-            return true;
-        else if (key.Key == ConsoleKey.N)
-            return false;
-    } while (true);
+//    do
+//    {
+//        ConsoleKeyInfo key = Console.ReadKey();
+//        if (key.Key == ConsoleKey.Y)
+//            return true;
+//        else if (key.Key == ConsoleKey.N)
+//            return false;
+//    } while (true);
 
-}
+//}
 
-int ReadInt32 ( string message, int minimumValue, int maximumValue )
-{
-    Console.Write(message);
+//int ReadInt32 ( string message, int minimumValue, int maximumValue )
+//{
+//    Console.Write(message);
 
-    do
-    {
-        string value = Console.ReadLine();
-        if (Int32.TryParse(value, out int result))
-        {
-            if (result >= minimumValue && result <= maximumValue)
-                return result;
-        };
-
-
-
-        Console.WriteLine("Value must be between " + minimumValue + " and " + maximumValue);
-    } while (true);
+//    do
+//    {
+//        string value = Console.ReadLine();
+//        if (Int32.TryParse(value, out int result))
+//        {
+//            if (result >= minimumValue && result <= maximumValue)
+//                return result;
+//        };
 
 
 
-}
+//        Console.WriteLine("Value must be between " + minimumValue + " and " + maximumValue);
+//    } while (true);
 
-string ReadString ( string message, bool required )
+
+
+//}
+
+string ReadString ( string message, bool required, string defaultValue = "" )
 {
 
     Console.Write(message);
@@ -140,7 +140,7 @@ void AddCharacter ()
     characterName = ReadString("Enter an account name:", true);
     characterProfession = CharProfession("Please select a Profession:");
     characterRace = CharRace("Please select a Race: ");
-    characterBiography = CharAttributes("Enter optional biographic details of the character.: ");
+    characterBiography = ReadString("Enter optional biographic details of the character:", false);
     characterStrength = CharAttributes("Enter Strength: ");
     characterIntelligence = CharAttributes("Enter Intelligence: ");
     characterAgility = CharAttributes("Enter Agility: ");
@@ -151,45 +151,59 @@ void AddCharacter ()
 
 void DeleteCharacter ()
 {
-    if (!ItemCart())
+    if (!CharCreated())
     {
         Error("No character created.");
         return;
     };
 
-    if (!Confirm("Are you sure you want to remove character (Y/N)?"))
+    if (Confirm($"Are you sure you want to remove character '{characterName}'?"))
         return;
     characterName = "";
 }
 
 void EditCharacter ()
 {
-    if (!ItemCart())
+    if (!CharCreated())
     {
-        Error("No items in cart");
+        Error("Character not created to Edit.");
         return;
     };
+
+    characterName = ReadString($"Enter a Character name or ENTER to remain '{characterName}': ", false, characterName);
+    characterProfession = CharProfession("Please select a Profession: ", characterProfession);
+    characterRace = CharRace("Please select a Race: ", characterRace);
+    characterBiography = ReadString("Enter optional biographic details of the character: ", false, characterBiography);
+    characterStrength = CharAttributes("Enter Strength: ", false, characterStrength);
+    characterIntelligence = CharAttributes("Enter Intelligence: ", false, characterIntelligence);
+    characterAgility = CharAttributes("Enter Agility: ", false, characterAgility);
+    characterConstitution = CharAttributes("Enter Constitution: ", false, characterConstitution);
+    characterCharisma = CharAttributes("Enter Charisma: ", false, characterCharisma);
+
 
 
 }
 
 void ViewCharacter ()
 {
-    if (!ItemCart())
+    if (!CharCreated())
     {
-        Error("No items in cart");
+        Error("No Character to view");
         return;
     };
 
-    Console.WriteLine(accountName);
-    Console.WriteLine($"{processor}");
-    Console.WriteLine($"{memory}");
-    Console.WriteLine($"{primaryStorage}");
-    Console.WriteLine($"{secondaryStorage}");
-    Console.WriteLine($"Your total in cart is: {userTotal}");
+    Console.WriteLine(characterName);
+    Console.WriteLine($"{characterProfession}");
+    Console.WriteLine($"{characterRace}");
+    Console.WriteLine($"{characterBiography}");
+    Console.WriteLine($"{characterStrength}");
+    Console.WriteLine($"{characterIntelligence}");
+    Console.WriteLine($"{characterAgility}");
+    Console.WriteLine($"{characterConstitution}");
+    Console.WriteLine($"{characterCharisma}");
 
-    //if (!String.IsNullOrEmpty(cart))
-    //    Console.WriteLine(cart);
+    if (!String.IsNullOrEmpty(characterBiography))
+        Console.WriteLine(characterBiography);
 }
 
 string CharProfession ( string message, string defaultValue = null )
@@ -243,7 +257,6 @@ string CharRace ( string message, string defaultValue = null )
     if (!String.IsNullOrEmpty(defaultValue))
         Console.WriteLine($"0) Leave unchanged ({defaultValue})");
 
-
     Console.WriteLine("1)Dwarf");
     Console.WriteLine("2)Elf");
     Console.WriteLine("3)Gnome");
@@ -253,7 +266,7 @@ string CharRace ( string message, string defaultValue = null )
     do
 
     {
-        string memory = null;
+        string characterRace = null;
 
         var key = Console.ReadKey(true);
         switch (key.Key)
@@ -261,211 +274,55 @@ string CharRace ( string message, string defaultValue = null )
 
         {
             case ConsoleKey.NumPad0:
-            case ConsoleKey.D0: memory = defaultValue; break;
-            case ConsoleKey.D1: memory = "8GB"; userTotal += 30; break;
-            case ConsoleKey.D2: memory = "16GB"; userTotal += 40; break;
-            case ConsoleKey.D3: memory = "32GB"; userTotal += 90; break;
-            case ConsoleKey.D4: memory = "64GB"; userTotal += 410; break;
-            case ConsoleKey.D5: memory = "128GB"; userTotal += 600; break;
+            case ConsoleKey.D0: characterRace = defaultValue; break;
+            case ConsoleKey.D1: characterRace = "Dwarf"; break;
+            case ConsoleKey.D2: characterRace = "Elf"; break;
+            case ConsoleKey.D3: characterRace = "Gnome"; break;
+            case ConsoleKey.D4: characterRace = "Half Elf"; break;
+            case ConsoleKey.D5: characterRace = "Human"; break;
         };
 
-        if (memory != null)
+        if (characterRace != null)
         {
             Console.WriteLine(key.KeyChar);
-            return memory;
+            return characterRace;
         };
     } while (true);
 }
 
-string ReadStorage ( string message, string defaultValue = null )
+
+int CharAttributes ( string name )
 {
-    Console.WriteLine(message);
-
-    if (!String.IsNullOrEmpty(defaultValue))
-        Console.WriteLine($"0) Leave unchanged ({defaultValue})");
-
-    Console.WriteLine("1)SSD 256 GB" + " " + "$90");
-    Console.WriteLine("2)SSD 512 GB" + " " + "$100");
-    Console.WriteLine("3)SSD 1 TB" + " " + "125");
-    Console.WriteLine("4)SSD 2 TB" + " " + "230");
-
-
-    do
-    {
-        string primaryStorage = null;
-
-        ConsoleKeyInfo key = Console.ReadKey(true);
-        switch (key.Key)
-
-        {
-            case ConsoleKey.NumPad0:
-            case ConsoleKey.D0: primaryStorage = defaultValue; break;
-            case ConsoleKey.D1: primaryStorage = "SSD 256 GB"; userTotal += 90; break;
-            case ConsoleKey.D2: primaryStorage = "SSD 512 GB"; userTotal += 100; break;
-            case ConsoleKey.D3: primaryStorage = "SSD 1 TB"; userTotal += 125; break;
-            case ConsoleKey.D4: primaryStorage = "SSD 2 TB"; userTotal += 230; break;
-
-        };
-
-        if (primaryStorage != null)
-        {
-            Console.WriteLine(key.KeyChar);
-            return primaryStorage;
-            //:value is empty and required
-            //Console.WriteLine("Value is required");
-        };
-
-    } while (true);
-    //return defaultValue;
-
+    return CharAttributes(name, true, 0);
 }
 
-string ReadSecStorage ( string message, string defaultValue = null )
+int CharAttributes ( string name, int defaultValue )
 {
-    Console.WriteLine(message);
-
-    if (!String.IsNullOrEmpty(defaultValue))
-        Console.WriteLine($"0) Leave unchanged ({defaultValue})");
-
-    Console.WriteLine("1)None" + " " + "$0");
-    Console.WriteLine("2)HDD 1 TB" + " " + "$40");
-    Console.WriteLine("3)HDD 2 TB" + " " + "$50");
-    Console.WriteLine("4)HDD 4 TB" + " " + "$70");
-    Console.WriteLine("5)SSD 512 GB" + " " + "$100");
-    Console.WriteLine("6)SSD 1 TB" + " " + "$125");
-    Console.WriteLine("7)SSD 2 TB" + " " + "$230");
-
-
-    do
-    {
-        string secondaryStorage = null;
-
-        ConsoleKeyInfo key = Console.ReadKey(true);
-        switch (key.Key)
-
-        {
-            case ConsoleKey.NumPad0:
-            case ConsoleKey.D0: secondaryStorage = defaultValue; break;
-            case ConsoleKey.D1: secondaryStorage = "None"; break;
-            case ConsoleKey.D2: secondaryStorage = "HDD 1 TB"; break;
-            case ConsoleKey.D3: secondaryStorage = "HDD 2 TB"; break;
-            case ConsoleKey.D4: secondaryStorage = "HDD 4 TB"; break;
-            case ConsoleKey.D5: secondaryStorage = "SSD 512 GB"; break;
-            case ConsoleKey.D6: secondaryStorage = "SSD 1 TB"; break;
-            case ConsoleKey.D7: secondaryStorage = "SSD 2 TB"; break;
-
-
-
-
-
-
-            //if value is not empty or not required
-            //if (value != "" || !required)
-        };
-
-        if (secondaryStorage != null)
-        {
-            Console.WriteLine(key.KeyChar);
-            return secondaryStorage;
-            //:value is empty and required
-            // Console.WriteLine("Value is required");
-        };
-
-    } while (true);
-    //return defaultValue;
-
+    return CharAttributes(name, false, defaultValue);
 }
 
-string ReadCard ( string message, string defaultValue = null )
+int CharAttributes ( string name, bool required, int defaultValue = 0 )
 {
-    Console.WriteLine(message);
+    var min = minAttribute;
+    var max = maxAttribute;
 
-    if (!String.IsNullOrEmpty(defaultValue))
-        Console.WriteLine($"0) Leave unchanged ({defaultValue})");
-
-    Console.WriteLine("1)None" + " " + "$0");
-    Console.WriteLine("2)GeForce RTX 3070" + " " + "$580");
-    Console.WriteLine("3)GeForce RTX 2070" + " " + "$400");
-    Console.WriteLine("4)Radeon RX 6600" + " " + "300");
-    Console.WriteLine("5)Radeon RX 5600" + " " + "325");
-
+    if (!required)
+        Console.Write($"Enter a value for {name} ({min}-{max}) or press ENTER to leave unchanged (Current = {defaultValue}): ");
+    else
+        Console.Write($"Enter a value for {name} ({min}-{max}): "); ;
 
     do
     {
-        string graphicsCard = null;
+        var input = Console.ReadLine();
+        if (String.IsNullOrEmpty(input) && !required)
+            return defaultValue;
 
-        ConsoleKeyInfo key = Console.ReadKey(true);
-        switch (key.Key)
+        if (Int32.TryParse(input, out var result) && result >= min && result <= max)
+            return result;
 
-        {
-            case ConsoleKey.NumPad0:
-            case ConsoleKey.D0: graphicsCard = defaultValue; break;
-            case ConsoleKey.D1: graphicsCard = "GeForce RTX 3070"; userTotal += 580; break;
-            case ConsoleKey.D2: graphicsCard = "GeForce RTX 2070"; userTotal += 400; break;
-            case ConsoleKey.D3: graphicsCard = "Radeon RX 6600"; userTotal += 300; break;
-            case ConsoleKey.D4: graphicsCard = "Radeon RX 5600"; userTotal += 325; break;
 
-        };
-
-        if (graphicsCard != null)
-        {
-            Console.WriteLine(key.KeyChar);
-            return graphicsCard;
-            //:value is empty and required
-            //Console.WriteLine("Value is required");
-        };
-
+        Error($"Value must be between {min} and {max}");
     } while (true);
-    //return defaultValue;
-
-}
-
-string ReadSystem ( string message, string defaultValue = null )
-{
-    Console.WriteLine(message);
-
-    if (!String.IsNullOrEmpty(defaultValue))
-        Console.WriteLine($"0) Leave unchanged ({defaultValue})");
-
-    Console.WriteLine("1)Windows 11 Home" + " " + "$140");
-    Console.WriteLine("2)Windows 11 Pro" + " " + "$160");
-    Console.WriteLine("3)Windows 10 Home" + " " + "150");
-    Console.WriteLine("4)Windows 10 Pro" + " " + "170");
-    Console.WriteLine("5)Linux(Fedora)" + " " + "20");
-    Console.WriteLine("6)Linux(Red Hat)" + " " + "60");
-
-
-    do
-    {
-        string opSystem = null;
-
-        ConsoleKeyInfo key = Console.ReadKey(true);
-        switch (key.Key)
-
-        {
-            case ConsoleKey.NumPad0:
-            case ConsoleKey.D0: opSystem = defaultValue; break;
-            case ConsoleKey.D1: opSystem = "Windows 11 Home"; userTotal += 140; break;
-            case ConsoleKey.D2: opSystem = "Windows 11 Pro"; userTotal += 160; break;
-            case ConsoleKey.D3: opSystem = "Windows 10 Home"; userTotal += 150; break;
-            case ConsoleKey.D4: opSystem = "Windows 10 Pro"; userTotal += 170; break;
-            case ConsoleKey.D5: opSystem = "Linux(Fedora)"; userTotal += 20; break;
-            case ConsoleKey.D6: opSystem = "Linux(Red Hat)"; userTotal += 60; break;
-
-
-        };
-
-        if (opSystem != null)
-        {
-            Console.WriteLine(key.KeyChar);
-            return opSystem;
-            //:value is empty and required
-            //Console.WriteLine("Value is required");
-        };
-
-    } while (true);
-    //return defaultValue;
-
 }
 
 
@@ -474,7 +331,7 @@ void Error ( string message )
     Console.WriteLine(message);
 }
 
-bool ItemCart ()
+bool CharCreated ()
 {
     return true;
 }
