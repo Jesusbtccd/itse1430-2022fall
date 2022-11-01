@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary
 {
-    internal class ObjectValidator
+    public class ObjectValidator
     {
         public bool IsValid ( IValidatableObject instance, out string errorMessage)
         {
-            var results = new List<ValidationResults>();
+            var results = new List<ValidationResult>();
             // Validator.TryValidateObject(movie, new ValidationContext(movie), results, true)
-            if (Validator.TryValidateObject(movie, new ValidationContext(movie), results, true)
+            if (!Validator.TryValidateObject(instance, new ValidationContext(instance), results, true))
             {
                 errorMessage = results[0].ErrorMessage;
-                return null;
+                return false;
             };
             errorMessage = null;
-            return null;
+            return true;
         }
     }
 }

@@ -59,26 +59,12 @@ namespace MovieLibrary.WinHost
             movie.RunLength = GetInt32(_txtRunLength);
             movie.ReleaseYear = GetInt32(_txtReleaseYear);
 
-            if (!new ObjectValidator().IsValid(movie, (out var error))
+            if (!new ObjectValidator().IsValid(movie, out var error))
             {
                 DisplayError(error, "Save");
                 return;
             };
-            //// if (movie.Rating.Length == 0)
-            // {
-            //     DisplayError("Rating is required", "Save");
-            //     return;
-            // };
-            // //if (movie.RunLength < 0)
-            // {
-            //     DisplayError("Run Length must be >= 0", "Save");
-            //     return;
-            // };
-            // //if (movie.ReleaseYear < 1900)
-            // {
-            //     DisplayError("Release Year must be >= 1900", "Save");
-            //     return;
-            // };
+
             //get rid of from
             //setting forms dialogresult to a reasonable value
             // call Close()
@@ -101,12 +87,7 @@ namespace MovieLibrary.WinHost
             return -1;
         }
 
-        private void label5_Click ( object sender, EventArgs e )
-        {
-
-        }
-
-        private void OnValidateTitle ( object sender, System.ComponentModel.CancelEventArgs e )
+        private void OnValidateTitle ( object sender, CancelEventArgs e )
         {
             var control = sender as TextBox;
 
@@ -123,8 +104,7 @@ namespace MovieLibrary.WinHost
         }
 
 
-
-        private void OnValidateRating ( object sender, System.ComponentModel.CancelEventArgs e )
+        private void OnValidateRating ( object sender, CancelEventArgs e )
         {
             var control = sender as ComboBox;
 
@@ -140,7 +120,7 @@ namespace MovieLibrary.WinHost
             };
         }
 
-        private void OnValidateRunLength ( object sender, System.ComponentModel.CancelEventArgs e )
+        private void OnValidateRunLength ( object sender, CancelEventArgs e )
         {
             var control = sender as TextBox;
 
@@ -157,7 +137,7 @@ namespace MovieLibrary.WinHost
             };
         }
 
-        private void OnValidateReleaseYear ( object sender, System.ComponentModel.CancelEventArgs e )
+        private void OnValidateReleaseYear ( object sender, CancelEventArgs e )
         {
             var control = sender as TextBox;
 

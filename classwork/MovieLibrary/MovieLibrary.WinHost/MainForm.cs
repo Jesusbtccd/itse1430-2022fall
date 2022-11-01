@@ -31,8 +31,8 @@ namespace MovieLibrary.WinHost
                 DisplayError(error, "Add Failed");
             } while (true);
         }
-        private Movie _movie;
-        private MovieDatabase _movies = new MovieDatabase();
+        //private Movie _movie;
+        private IMovieDatabase _movies = new Memory.MemoryMovieDatabase();
 
         private void OnMovieDelete (object sender, EventArgs e)
         {
@@ -78,7 +78,9 @@ namespace MovieLibrary.WinHost
             var movies = _movies.GetAll();
 
             _lstMovies.Items.Clear();
-            _lstMovies.Items.AddRange(movies);
+            //_lstMovies.Items.AddRange(movies);
+            foreach (var movie in movies)
+                _lstMovies.Items.Add(movie);
         }
 
         private Movie GetSelectedMovie()
