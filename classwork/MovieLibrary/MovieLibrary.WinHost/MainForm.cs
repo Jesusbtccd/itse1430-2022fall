@@ -78,9 +78,23 @@ namespace MovieLibrary.WinHost
             var movies = _movies.GetAll();
 
             _lstMovies.Items.Clear();
+
+            var items = movies.OrderBy(OrderBytitle)
+            movies = movies.OrderBy(OrderByTitle);
+            movies = movies.ThenBy(OrderByReleaseYear);
             //_lstMovies.Items.AddRange(movies);
-            foreach (var movie in movies)
-                _lstMovies.Items.Add(movie);
+            //foreach (var movie in movies)
+            //_lstMovies.Items.Add(movie);
+            _lstMovies.Items.AddRange(items);
+        }
+
+        private string OderByTitle ( Movie movie)
+        {
+            return movie.Title;
+        }
+        private int OrderByReleaseYear (Movie movie )
+        {
+            return movie.ReleaseYear;
         }
 
         private Movie GetSelectedMovie()
