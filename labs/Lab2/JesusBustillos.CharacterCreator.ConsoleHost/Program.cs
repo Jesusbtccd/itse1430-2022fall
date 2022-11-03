@@ -3,21 +3,42 @@
 //10/19/2022
 
 using JesusBustillos.CharacterCreator;
-
-string characterName;
-string characterProfession;
-string characterRace;
-string characterBiography;
-int characterStrength, characterIntelligence, characterAgility, characterConstitution, characterCharisma;
-const int minAttribute = 1;
-const int maxAttribute = 100;
+namespace JesusBustillos.CharacterCreator
+{
+    public class Program
+    {
 
 
+        static Character c;
+        const int minAttribute = 1;
+        const int maxAttribute = 100;
 
-DisplayInformation();
+public static void Main ()
+        {
+            DisplayInformation();
+            var done = false;
+            do
+            {
+                switch (DisplayMenu())
+                {
+
+                    case MenuOption.Add: AddCharacter(); break;
+                    case MenuOption.Edit: EditCharacter(); break;
+                    case MenuOption.View: ViewCharacter(); break;
+                    case MenuOption.Delete: DeleteCharacter(); break;
+                    case MenuOption.Quit: done = Exit(); break;
+
+                    default: done = true; break;
+
+                };
+
+            } while (!done);
+        }
 
 
-void DisplayInformation ()
+
+
+static void DisplayInformation ()
 {
     Console.WriteLine("Jesus Bustillos");
     Console.WriteLine("Character Creator");
@@ -25,32 +46,14 @@ void DisplayInformation ()
     Console.WriteLine("10/19/2022");
 }
 
-var done = false;
-do
-{
-    switch (DisplayMenu())
-    {
-
-        case MenuOption.Add: AddCharacter(); break;
-        case MenuOption.Edit: EditCharacter(); break;
-        case MenuOption.View: ViewCharacter(); break;
-        case MenuOption.Delete: DeleteCharacter(); break;
-        case MenuOption.Quit: done = Exit(); break;
-
-        default: done = true; break;
-
-    };
-
-} while (!done);
 
 
 
 
-DisplayMenu();
 
-AddCharacter();
 
-MenuOption DisplayMenu ()
+
+static MenuOption DisplayMenu ()
 {
     Console.WriteLine();
     Console.WriteLine("".PadLeft(10, '-'));
@@ -117,7 +120,7 @@ MenuOption DisplayMenu ()
 
 //}
 
-string ReadString ( string message, bool required, string defaultValue = "" )
+static string ReadString ( string message, bool required, string defaultValue = "" )
 {
 
     Console.Write(message);
@@ -128,28 +131,29 @@ string ReadString ( string message, bool required, string defaultValue = "" )
         string value = Console.ReadLine();
 
         if (value != "" || !required)
-            return value;
+            return value == ""? defaultValue : value;
         Console.Write(message);
         Console.WriteLine("Value is required");
     };
 }
 
 
-void AddCharacter ()
+static void AddCharacter ()
 {
-    characterName = ReadString("Enter an account name:", true);
-    characterProfession = CharProfession("Please select a Profession:");
-    characterRace = CharRace("Please select a Race: ");
-    characterBiography = ReadString("Enter optional biographic details of the character:", false);
-    characterStrength = CharAttributes("Enter Strength: ");
-    characterIntelligence = CharAttributes("Enter Intelligence: ");
-    characterAgility = CharAttributes("Enter Agility: ");
-    characterConstitution = CharAttributes("Enter Constitution: ");
-    characterCharisma = CharAttributes("Enter Charisma: ");
+    c = new Character();
+    c.characterName = ReadString("Enter an account name:", true);
+    c.characterProfession = CharProfession("Please select a Profession:");
+    c.characterRace = CharRace("Please select a Race: ");
+    c.characterBiography = ReadString("Enter optional biographic details of the character:", false);
+    c.characterStrength = CharAttributes("Enter Strength: ");
+    c.characterIntelligence = CharAttributes("Enter Intelligence: ");
+    c.characterAgility = CharAttributes("Enter Agility: ");
+    c.characterConstitution = CharAttributes("Enter Constitution: ");
+    c.characterCharisma = CharAttributes("Enter Charisma: ");
 
 }
 
-void DeleteCharacter ()
+static void DeleteCharacter ()
 {
     if (!CharCreated())
     {
@@ -157,12 +161,13 @@ void DeleteCharacter ()
         return;
     };
 
-    if (Confirm($"Are you sure you want to remove character '{characterName}'?"))
-        return;
-    characterName = "";
+    if (Confirm($"Are you sure you want to remove character '{c.characterName}'?"))
+                c=null;
+            return;
+            
 }
 
-void EditCharacter ()
+static void EditCharacter ()
 {
     if (!CharCreated())
     {
@@ -170,21 +175,21 @@ void EditCharacter ()
         return;
     };
 
-    characterName = ReadString($"Enter a Character name or ENTER to remain '{characterName}': ", false, characterName);
-    characterProfession = CharProfession("Please select a Profession: ", characterProfession);
-    characterRace = CharRace("Please select a Race: ", characterRace);
-    characterBiography = ReadString("Enter optional biographic details of the character: ", false, characterBiography);
-    characterStrength = CharAttributes("Enter Strength: ", false, characterStrength);
-    characterIntelligence = CharAttributes("Enter Intelligence: ", false, characterIntelligence);
-    characterAgility = CharAttributes("Enter Agility: ", false, characterAgility);
-    characterConstitution = CharAttributes("Enter Constitution: ", false, characterConstitution);
-    characterCharisma = CharAttributes("Enter Charisma: ", false, characterCharisma);
+    c.characterName = ReadString($"Enter a Character name or ENTER to remain '{c.characterName}': ", false, c.characterName);
+    c.characterProfession = CharProfession("Please select a Profession: ", c.characterProfession);
+    c.characterRace = CharRace("Please select a Race: ", c.characterRace);
+    c.characterBiography = ReadString("Enter optional biographic details of the character: ", false, c.characterBiography);
+    c.characterStrength = CharAttributes("Enter Strength: ", false, c.characterStrength);
+    c.characterIntelligence = CharAttributes("Enter Intelligence: ", false, c.characterIntelligence);
+    c.characterAgility = CharAttributes("Enter Agility: ", false, c.characterAgility);
+    c.characterConstitution = CharAttributes("Enter Constitution: ", false, c.characterConstitution);
+    c.characterCharisma = CharAttributes("Enter Charisma: ", false, c.characterCharisma);
 
 
 
 }
 
-void ViewCharacter ()
+static void ViewCharacter ()
 {
     if (!CharCreated())
     {
@@ -192,21 +197,20 @@ void ViewCharacter ()
         return;
     };
 
-    Console.WriteLine(characterName);
-    Console.WriteLine($"{characterProfession}");
-    Console.WriteLine($"{characterRace}");
-    Console.WriteLine($"{characterBiography}");
-    Console.WriteLine($"{characterStrength}");
-    Console.WriteLine($"{characterIntelligence}");
-    Console.WriteLine($"{characterAgility}");
-    Console.WriteLine($"{characterConstitution}");
-    Console.WriteLine($"{characterCharisma}");
+    Console.WriteLine(c.characterName);
+    Console.WriteLine($"{c.characterProfession}");
+    Console.WriteLine($"{c.characterRace}");
+    Console.WriteLine($"{c.characterStrength}");
+    Console.WriteLine($"{c.characterIntelligence}");
+    Console.WriteLine($"{c.characterAgility}");
+    Console.WriteLine($"{c.characterConstitution}");
+    Console.WriteLine($"{c.characterCharisma}");
 
-    if (!String.IsNullOrEmpty(characterBiography))
-        Console.WriteLine(characterBiography);
+    if (!String.IsNullOrEmpty(c.characterBiography))
+        Console.WriteLine(c.characterBiography);
 }
 
-string CharProfession ( string message, string defaultValue = null )
+static string CharProfession ( string message, string defaultValue = null )
 {
     Console.WriteLine(message);
 
@@ -249,7 +253,7 @@ string CharProfession ( string message, string defaultValue = null )
 }
 
 
-string CharRace ( string message, string defaultValue = null )
+static string CharRace ( string message, string defaultValue = null )
 {
     Console.WriteLine(message);
 
@@ -291,17 +295,17 @@ string CharRace ( string message, string defaultValue = null )
 }
 
 
-int CharAttributes ( string name )
+static int CharAttributes ( string name )
 {
     return CharAttributes(name, true, 0);
 }
 
-int CharAttributes ( string name, int defaultValue )
+static int CharAttributes ( string name, int defaultValue )
 {
     return CharAttributes(name, false, defaultValue);
 }
 
-int CharAttributes ( string name, bool required, int defaultValue = 0 )
+static int CharAttributes ( string name, bool required, int defaultValue = 0 )
 {
     var min = minAttribute;
     var max = maxAttribute;
@@ -326,17 +330,17 @@ int CharAttributes ( string name, bool required, int defaultValue = 0 )
 }
 
 
-void Error ( string message )
+static void Error ( string message )
 {
     Console.WriteLine(message);
 }
 
-bool CharCreated ()
+static bool CharCreated ()
 {
-    return true;
+            return c != null;
 }
 
-bool Confirm ( string message )
+static bool Confirm ( string message )
 {
     Console.Write($"{message} (Y/N) ");
 
@@ -352,8 +356,10 @@ bool Confirm ( string message )
 
 }
 
-bool Exit ()
+static bool Exit ()
 {
     return Confirm("Are you sure you want exit menu? ");
 }
 
+}
+}

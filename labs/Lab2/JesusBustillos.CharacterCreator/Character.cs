@@ -6,7 +6,11 @@ namespace JesusBustillos.CharacterCreator
 {
     public class Character
     {
-        
+        public string characterName;
+        public string characterProfession;
+        public string characterRace;
+        public string characterBiography;
+        public int characterStrength, characterIntelligence, characterAgility, characterConstitution, characterCharisma;
     }
 
     public enum MenuOption
