@@ -79,20 +79,27 @@ namespace MovieLibrary.WinHost
 
             _lstMovies.Items.Clear();
 
-            var items = movies.OrderBy(OrderBytitle)
-            movies = movies.OrderBy(OrderByTitle);
-            movies = movies.ThenBy(OrderByReleaseYear);
+            //Func<Movie, string> someFunc = OrderBytitle;
+            //var someResult = someFunc = OrderByTitle;
+
+            //var items = movies.OrderBy(OrderByTitle);
+           // movies = movies.OrderBy(OrderByTitle);
+            //movies = movies.ThenBy(OrderByReleaseYear);
+
+            var items = movies.OrderBy(x => x.Title)
+                              .ThenBy(x => x.ReleaseYear)
+                              .ToArray();
             //_lstMovies.Items.AddRange(movies);
             //foreach (var movie in movies)
             //_lstMovies.Items.Add(movie);
             _lstMovies.Items.AddRange(items);
         }
 
-        private string OderByTitle ( Movie movie)
+        private string OderByTitle ( Movie movie) //Func<Movie, string>
         {
             return movie.Title;
         }
-        private int OrderByReleaseYear (Movie movie )
+        private int OrderByReleaseYear (Movie movie ) 
         {
             return movie.ReleaseYear;
         }
