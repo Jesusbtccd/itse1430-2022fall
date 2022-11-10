@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary
 {
-    public class ObjectValidator
+    public static class ObjectValidator
     {
-        public bool IsValid ( IValidatableObject instance, out string errorMessage)
+        public static bool IsValid ( IValidatableObject instance, out string errorMessage)
         {
             var results = new List<ValidationResult>();
             // Validator.TryValidateObject(movie, new ValidationContext(movie), results, true)
@@ -20,6 +20,11 @@ namespace MovieLibrary
             };
             errorMessage = null;
             return true;
+        }
+
+        public static void Validate ( IValidatableObject instance )
+        {
+            Validator.ValidateObject(instance, new ValidationContext(instance), true);
         }
     }
 }

@@ -20,17 +20,26 @@ namespace MovieLibrary.WinHost
                 if (child.ShowDialog(this) != DialogResult.OK)
                     return;
                 //child.Show();
-
-                //todo: Save this off
-                if (_movies.Add(child.SelectedMovie, out var error) != null)
+                try
                 {
+                    _movies.Add(child.SelectedMovie);
                     UpdateUI();
                     return;
-                };
 
-                DisplayError(error, "Add Failed");
+                } catch (InvalidOperationException ex)
+                {
+                    DisplayError("Movies must be unique.", "Add Failed");
+                } catch (ArgumentException ex)
+                {
+                    DisplayError("You messed up developer.", "Add Failed");
+                } catch (Exception ex)
+
+                {
+                    DisplayError(ex.Message, "Add Failed");
+                };
             } while (true);
         }
+            
         //private Movie _movie;
         private IMovieDatabase _movies = new Memory.MemoryMovieDatabase();
 
