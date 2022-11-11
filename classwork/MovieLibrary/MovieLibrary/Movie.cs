@@ -48,16 +48,17 @@ namespace MovieLibrary
         /// <summary>Gets or sets the title.</summary>
         public string Title
         {
+            //Expression body
             // string get_Title () 
-            get 
-            {
-                //return String.IsNullOrEmpty(_title) ? "" : _title;
-                return _title ?? "";
-            }
+            get => _title ?? "";
+            //{
+            //    //return String.IsNullOrEmpty(_title) ? "" : _title;
+            //    return _title ?? "";
+            //}
 
             // void set_Title ( string value )
             //set { _title = String.IsNullOrEmpty(value) ? "" : value.Trim(); }
-            set { _title = value?.Trim() ?? ""; }
+            set => _title = value?.Trim() ?? ""; 
         }
         private string _title;
 
@@ -76,9 +77,9 @@ namespace MovieLibrary
         public string Description
         {
             //get { return String.IsNullOrEmpty(_description) ? "" : _description; }
-            get { return _description ?? ""; }
             //set { _description = String.IsNullOrEmpty(value) ? "" : value.Trim(); }
-            set { _description = value?.Trim() ?? ""; }
+            get => _description ?? "";
+            set => _description = value?.Trim() ?? ""; 
         }
         private string _description;
 
@@ -117,11 +118,11 @@ namespace MovieLibrary
 
         /// <summary>Determines if the movie is black and white.</summary>
         //public bool IsBlackAndWhite () { return _releaseYear < 1939; }
-        public bool IsBlackAndWhite
-        {
-            get { return ReleaseYear < YearColorWasIntroduced; }
-            //set { }
-        }
+        public bool IsBlackAndWhite => ReleaseYear < YearColorWasIntroduced;
+        //{
+        //    get => ReleaseYear < YearColorWasIntroduced; 
+        //    //set { }
+        //}
 
         //Public fields are allowed when they are constants
         public const int YearColorWasIntroduced = 1939;
@@ -155,16 +156,16 @@ namespace MovieLibrary
 
         }
 
-       
+
 
         //Equals & GetHashCode
         //GetType
-        public override string ToString ()
-        {
-            //ToString == this.toString();
-            //var str = base.ToString();  //Calls base type impl
-            return Title;
-        }
+        public override string ToString () => Title;
+        //{
+        //    //ToString == this.toString();
+        //    //var str = base.ToString();  //Calls base type impl
+        //    return Title;
+        //}
 
         public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
         {

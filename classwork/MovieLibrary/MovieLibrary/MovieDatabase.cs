@@ -20,34 +20,38 @@ namespace MovieLibrary
         ///   - Movie is not valid
         ///   - Movie title already exists
         /// </remarks>
-        public Movie Add ( Movie movie, out string errorMessage )
+        public Movie Add ( Movie movie)
         {
             //Validate movie
             if (movie == null)
-            {
-                errorMessage = "Movie cannot be null";
-                return null;
-            };
+                throw new ArgumentNullException(nameof(movie));
+
+            ObjectValidator.Validate(movie);
+            //{
+            //    errorMessage = "Movie cannot be null";
+            //    return null;
+            //};
 
             //Use IValidatableObject Luke...
             //if (!movie.Validate(out errorMessage))
-            if (!new ObjectValidator().IsValid(movie, out errorMessage))
-                return null;
+            //if (!ObjectValidator.IsValid(movie, out errorMessage))
+            //    return null;
 
             //Must be unique
             var existing = FindByTitle(movie.Title);
             if (existing != null)
-            {
-                errorMessage = "Movie must be unique";
-                return null;
-            };
+                throw new InvalidOperationException("Movie title must be unique.");
+            //{
+            //    errorMessage = "Movie must be unique";
+            //    return null;
+            //};
 
             //Add
             movie = AddCore(movie);
             //movie.Id = _id++;
             //_movies.Add(movie.Clone());
 
-            errorMessage = null;
+            
             return movie;
         }
 
@@ -64,7 +68,8 @@ namespace MovieLibrary
         {
             //TODO: Error
             if (id <= 0)
-                return null;
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0.");
+                //return null;
 
             //foreach (var movie in _movies)
             //    if (movie?.Id == id)
@@ -109,7 +114,8 @@ namespace MovieLibrary
         public void Remove ( int id )
         {
             if (id <= 0)
-                return;
+                if (id <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0.");
 
             RemoveCore(id);
             //Enumerate array looking for match
@@ -135,33 +141,38 @@ namespace MovieLibrary
         ///   - Movie is not valid
         ///   - Movie title already exists
         /// </remarks>
-        public bool Update ( int id, Movie movie, out string errorMessage )
+        public void Update ( int id, Movie movie )
         {
             //Validate movie
-            if (movie == null)
-            {
-                errorMessage = "Movie cannot be null";
-                return false;
-            };
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0.");
+            //{
+            //    errorMessage = "Movie cannot be null";
+            //    return false;
+            //};
 
-            if (!new ObjectValidator().IsValid(movie, out errorMessage))
-                return false;
+            if (movie == null)
+                throw new ArgumentNullException(nameof(movie));
+            ObjectValidator.Validate(movie);
+               
 
             //Movie must already exist
             var oldMovie = GetCore(id);
             if (oldMovie == null)
-            {
-                errorMessage = "Movie does not exist";
-                return false;
-            };
+                throw new ArgumentException("Movie does not exist", nameof(movie));
+            //{
+            //    errorMessage = "Movie does not exist";
+            //    return false;
+            //};
 
             //Must be unique
             var existing = FindByTitle(movie.Title);
             if (existing != null && existing.Id != id)
-            {
-                errorMessage = "Movie must be unique";
-                return false;
-            };
+                    throw new InvalidOperationException("Movie must be unique.");
+            //{
+            //    errorMessage = "Movie must be unique";
+            //    return false;
+            //};
 
             UpdateCore(id, movie);
             ////Copy 

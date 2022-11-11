@@ -20,17 +20,26 @@ namespace MovieLibrary.WinHost
                 if (child.ShowDialog(this) != DialogResult.OK)
                     return;
                 //child.Show();
-
-                //todo: Save this off
-                if (_movies.Add(child.SelectedMovie, out var error) != null)
+                try
                 {
+                    _movies.Add(child.SelectedMovie);
                     UpdateUI();
                     return;
-                };
 
-                DisplayError(error, "Add Failed");
+                } catch (InvalidOperationException ex)
+                {
+                    DisplayError("Movies must be unique.", "Add Failed");
+                } catch (ArgumentException ex)
+                {
+                    DisplayError("You messed up developer.", "Add Failed");
+                } catch (Exception ex)
+
+                {
+                    DisplayError(ex.Message, "Add Failed");
+                };
             } while (true);
         }
+            
         //private Movie _movie;
         private IMovieDatabase _movies = new Memory.MemoryMovieDatabase();
 
@@ -78,9 +87,30 @@ namespace MovieLibrary.WinHost
             var movies = _movies.GetAll();
 
             _lstMovies.Items.Clear();
+
+            //Func<Movie, string> someFunc = OrderBytitle;
+            //var someResult = someFunc = OrderByTitle;
+
+            //var items = movies.OrderBy(OrderByTitle);
+           // movies = movies.OrderBy(OrderByTitle);
+            //movies = movies.ThenBy(OrderByReleaseYear);
+
+            var items = movies.OrderBy(x => x.Title)
+                              .ThenBy(x => x.ReleaseYear)
+                              .ToArray();
             //_lstMovies.Items.AddRange(movies);
-            foreach (var movie in movies)
-                _lstMovies.Items.Add(movie);
+            //foreach (var movie in movies)
+            //_lstMovies.Items.Add(movie);
+            _lstMovies.Items.AddRange(items);
+        }
+
+        private string OderByTitle ( Movie movie) //Func<Movie, string>
+        {
+            return movie.Title;
+        }
+        private int OrderByReleaseYear (Movie movie ) 
+        {
+            return movie.ReleaseYear;
         }
 
         private Movie GetSelectedMovie()
