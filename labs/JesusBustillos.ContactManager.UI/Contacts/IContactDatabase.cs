@@ -10,5 +10,9 @@ namespace Contacts
     {
         Contact Add (Contact c);
         Contact Get (int Id);
+        IEnumerable<Contact> GetAll ();
+        void Remove (int Id);
+        void Update (Contact c);
+        
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Contacts
 {
-    public class Contact : IContactDatabase
+    public class Contact 
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -9,7 +9,14 @@
         public bool IsFavorite { get; set; }
         public int ContactId { get; set; }
 
-        Contact Add ( Contact c ) { return c; }
+        public Contact (string FirstName, string LastName, string Email, string Notes, bool IsFavorite)
+        {
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+            this.Email = Email;
+            this.Notes = Notes;
+            this.IsFavorite = IsFavorite;
+        }
 
 
 
