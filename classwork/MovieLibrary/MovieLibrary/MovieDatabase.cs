@@ -169,18 +169,26 @@ namespace MovieLibrary
             var existing = FindByTitle(movie.Title);
             if (existing != null && existing.Id != id)
                     throw new InvalidOperationException("Movie must be unique.");
+
+            try
+            {
+                UpdateCore(id, movie);
+            } catch (Exception e)
+            {
+                throw new Exception("Update failed", e);
+            };
             //{
             //    errorMessage = "Movie must be unique";
             //    return false;
             //};
 
-            UpdateCore(id, movie);
-            ////Copy 
-            //movie.CopyTo(oldMovie);
-            //oldMovie.Id = id;
+            //UpdateCore(id, movie);
+            //////Copy 
+            ////movie.CopyTo(oldMovie);
+            ////oldMovie.Id = id;
 
-            errorMessage = null;
-            return true;
+            //errorMessage = null;
+            //return true;
         }
 
         protected abstract void UpdateCore ( int id, Movie movie );

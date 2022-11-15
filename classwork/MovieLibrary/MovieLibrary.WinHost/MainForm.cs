@@ -36,6 +36,9 @@ namespace MovieLibrary.WinHost
 
                 {
                     DisplayError(ex.Message, "Add Failed");
+
+                    //rethrow
+                    //throw ex;
                 };
             } while (true);
         }
@@ -159,13 +162,25 @@ namespace MovieLibrary.WinHost
                 if (child.ShowDialog() != DialogResult.OK)
                     return;
                 //child.Show();
-                if (_movies.Update(movie.Id, child.SelectedMovie, out var error))
+                //if (_movies.Update(movie.Id, child.SelectedMovie, out var error))
+                try
                 {
+                    Cursor = Cursors.WaitCursor;
+                    _movies.Update(movie.Id, child.SelectedMovie);
+                    //System.Threading.Thread
+                    //Cursor = Cursors.Default;
+
                     UpdateUI();
                     return;
+                } catch (Exception ex)
+                {
+                    //Cursor = cursors.Default;
+                    DisplayError(ex.Message, "Update Failed");
+                }finally
+                { 
+                    //guaranteed to run
+                    Cursor=Cursors.Default;
                 };
-
-                DisplayError(error, "Update Failed");
 
                 ////todo: Save this off
                 //_movie = child.SelectedMovie;

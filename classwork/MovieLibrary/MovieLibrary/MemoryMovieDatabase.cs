@@ -79,10 +79,11 @@ namespace MovieLibrary.Memory
         protected override void RemoveCore ( int id )
         {
             var movie = FindById(id);
-            if (movie == null)
-                throw new NotSupportedException("Movie does not exist.");
+            if (movie != null)
+                _movies.Remove(movie);
+               
 
-            _movies.Remove(movie);
+            //_movies.Remove(movie);
             //for (var index = 0; index < _movies.Count; ++index)
             //    if (_movies[index]?.Id == id)
             //    {
@@ -97,6 +98,17 @@ namespace MovieLibrary.Memory
         {
             //Copy 
             var oldMovie = FindById(id);
+            if (oldMovie == null)
+                throw new NotSupportedException("Movie does not exist.");
+
+            //try
+            //{
+            //    UpdateCore(id, movie);
+            //}catch(Exception e)
+            //{
+            //    throw new Exception("Update failed");
+            //};
+
             movie.CopyTo(oldMovie);
             oldMovie.Id = id;
         }
