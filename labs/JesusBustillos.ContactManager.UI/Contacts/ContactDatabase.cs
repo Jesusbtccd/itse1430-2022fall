@@ -8,28 +8,42 @@ namespace Contacts
 {
     public class ContactDatabase : IContactDatabase
     {
+        int _Id=1;
+        List<Contact> _contacts = new List<Contact>();
+
         public Contact Add (Contact c)
         {
+            c.ContactId = _Id++;
+            _contacts.Add(c);
             return c;
         }
         public Contact Get ( int Id )
         {
-            Contact c = null;
-            return (c);
+            return _contacts.FirstOrDefault(x => x.ContactId == _Id);
         }
         public IEnumerable<Contact> GetAll ()
         {
-            return GetAll();
+            return from contact in _contacts
+                   select contact;
+  
         }
-        public void Remove ( int Id )
+        public void Remove ( int Id)
         {
-            Remove(Id);
+            var oldContact = FindById(Id);
+            if (oldContact != null)
+                _contacts.Remove(oldContact);
         }
         public void Update (Contact c)
         {
-            Update(c);
+            var contact = FindById(_Id);
+            if (contact == null)
+                return;
         }
-        
+         private Contact FindById (int Id)
+        {
+            return _contacts.FirstOrDefault(x => x.ContactId == _Id);
+        }
+
 
         
 
