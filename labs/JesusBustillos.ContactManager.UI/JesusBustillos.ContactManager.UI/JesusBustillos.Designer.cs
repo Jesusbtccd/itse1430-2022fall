@@ -36,7 +36,8 @@
             this.addNewContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.editExistingContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +47,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem,
-            this.addNewContactToolStripMenuItem});
+            this.addNewContactToolStripMenuItem,
+            this.editExistingContactToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 24);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 28);
@@ -95,7 +97,7 @@
             // newContactToolStripMenuItem
             // 
             this.newContactToolStripMenuItem.Name = "newContactToolStripMenuItem";
-            this.newContactToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.newContactToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.newContactToolStripMenuItem.Text = "New Contact:";
             // 
             // menuStrip2
@@ -107,20 +109,28 @@
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
             // 
-            // textBox1
+            // listBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(472, 244);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(125, 27);
-            this.textBox1.TabIndex = 2;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 20;
+            this.listBox1.Location = new System.Drawing.Point(497, 123);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(291, 284);
+            this.listBox1.TabIndex = 3;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
+            // editExistingContactToolStripMenuItem
+            // 
+            this.editExistingContactToolStripMenuItem.Name = "editExistingContactToolStripMenuItem";
+            this.editExistingContactToolStripMenuItem.Size = new System.Drawing.Size(159, 24);
+            this.editExistingContactToolStripMenuItem.Text = "Edit Existing Contact";
             // 
             // JesusBustillos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.menuStrip2);
             this.MainMenuStrip = this.menuStrip1;
@@ -143,6 +153,7 @@
         private MenuStrip menuStrip2;
         private ToolStripMenuItem addNewContactToolStripMenuItem;
         private ToolStripMenuItem newContactToolStripMenuItem;
-        private TextBox textBox1;
+        private ListBox listBox1;
+        private ToolStripMenuItem editExistingContactToolStripMenuItem;
     }
 }

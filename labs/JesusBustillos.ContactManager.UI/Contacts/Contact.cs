@@ -18,7 +18,10 @@
             this.IsFavorite = IsFavorite;
         }
 
-
+        public override string ToString ()
+        {
+            return LastName + ", " + FirstName;
+        }
 
     }
 

@@ -14,6 +14,7 @@ namespace JesusBustillos.ContactManager.UI
 {
     public partial class AddNewContact : Form
     {
+        public JesusBustillos mainWindow;
         public AddNewContact ()
         {
             InitializeComponent();
@@ -26,7 +27,8 @@ namespace JesusBustillos.ContactManager.UI
             {
 
                 JesusBustillos.contactDatabase.Add (contact);
-            this.Close();
+                mainWindow.updatedisplay();
+                this.Close();
             } else
             {
                 MessageBox.Show("Invalid Input");
