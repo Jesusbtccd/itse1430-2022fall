@@ -165,6 +165,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "AddNewContact";
             this.Text = "AddNewContact";
+            this.Load += new System.EventHandler(this.AddNewContact_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

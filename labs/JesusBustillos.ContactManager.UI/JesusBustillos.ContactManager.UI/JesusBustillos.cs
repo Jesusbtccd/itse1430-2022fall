@@ -9,8 +9,15 @@ namespace JesusBustillos.ContactManager.UI
         {
             InitializeComponent();
             listBox1.DoubleClick += new System.EventHandler(listBox1_DoubleClick);
+            listBox1.KeyDown += new KeyEventHandler(listDeleteKey);
         }
-
+        public void listDeleteKey(object sender, KeyEventArgs e )
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                delete();
+            }
+        }
         public void updatedisplay (bool initialLoad = false)
         {
             var contacts = contactDatabase.GetAll();
@@ -60,6 +67,31 @@ namespace JesusBustillos.ContactManager.UI
         private void listBox1_DoubleClick ( object sender, EventArgs e )
         {
             //MessageBox.Show("Selected " + listBox1.SelectedItem.ToString());
+        }
+
+        private void editExistingContactToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            AddNewContact contactMenu = new AddNewContact();
+            contactMenu.mainWindow = this;
+            contactMenu.SelectedContact = listBox1.SelectedItem as Contact;
+            contactMenu.Show();
+            contactMenu.MaximizeBox = false;
+            contactMenu.MinimizeBox = false;
+        }
+
+        private void deleteContactToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            delete();
+        }
+
+        public void delete ()
+        {
+            var result = MessageBox.Show("Confirm deletion?", "", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                contactDatabase.Remove(((Contact)listBox1.SelectedItem).ContactId); //ERROR - Deleting null contact causes crash
+                updatedisplay();
+            }
         }
     }
 }

@@ -35,9 +35,10 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editExistingContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.editExistingContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +49,8 @@
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem,
             this.addNewContactToolStripMenuItem,
-            this.editExistingContactToolStripMenuItem});
+            this.editExistingContactToolStripMenuItem,
+            this.deleteContactToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 24);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 28);
@@ -100,6 +102,13 @@
             this.newContactToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.newContactToolStripMenuItem.Text = "New Contact:";
             // 
+            // editExistingContactToolStripMenuItem
+            // 
+            this.editExistingContactToolStripMenuItem.Name = "editExistingContactToolStripMenuItem";
+            this.editExistingContactToolStripMenuItem.Size = new System.Drawing.Size(159, 24);
+            this.editExistingContactToolStripMenuItem.Text = "Edit Existing Contact";
+            this.editExistingContactToolStripMenuItem.Click += new System.EventHandler(this.editExistingContactToolStripMenuItem_Click);
+            // 
             // menuStrip2
             // 
             this.menuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -119,11 +128,12 @@
             this.listBox1.TabIndex = 3;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
-            // editExistingContactToolStripMenuItem
+            // deleteContactToolStripMenuItem
             // 
-            this.editExistingContactToolStripMenuItem.Name = "editExistingContactToolStripMenuItem";
-            this.editExistingContactToolStripMenuItem.Size = new System.Drawing.Size(159, 24);
-            this.editExistingContactToolStripMenuItem.Text = "Edit Existing Contact";
+            this.deleteContactToolStripMenuItem.Name = "deleteContactToolStripMenuItem";
+            this.deleteContactToolStripMenuItem.Size = new System.Drawing.Size(122, 24);
+            this.deleteContactToolStripMenuItem.Text = "Delete Contact";
+            this.deleteContactToolStripMenuItem.Click += new System.EventHandler(this.deleteContactToolStripMenuItem_Click);
             // 
             // JesusBustillos
             // 
@@ -155,5 +165,6 @@
         private ToolStripMenuItem newContactToolStripMenuItem;
         private ListBox listBox1;
         private ToolStripMenuItem editExistingContactToolStripMenuItem;
+        private ToolStripMenuItem deleteContactToolStripMenuItem;
     }
 }

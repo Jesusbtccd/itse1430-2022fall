@@ -19,7 +19,7 @@ namespace Contacts
         }
         public Contact Get ( int Id )
         {
-            return _contacts.FirstOrDefault(x => x.ContactId == _Id);
+            return _contacts.FirstOrDefault(x => x.ContactId == Id);
         }
         public IEnumerable<Contact> GetAll ()
         {
@@ -41,7 +41,7 @@ namespace Contacts
         }
          private Contact FindById (int Id)
         {
-            return _contacts.FirstOrDefault(x => x.ContactId == _Id);
+            return _contacts.FirstOrDefault(x => x.ContactId == Id);
         }
 
 

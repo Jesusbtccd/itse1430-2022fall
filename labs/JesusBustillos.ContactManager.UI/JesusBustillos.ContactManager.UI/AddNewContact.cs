@@ -22,11 +22,19 @@ namespace JesusBustillos.ContactManager.UI
 
         private void button2_Click ( object sender, EventArgs e )
         {
-            var contact = new Contact(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, checkBox1.Checked);
-            if (contact.LastName != "" && IsValidEmail(contact.Email))
+            
+            var contact = SelectedContact?? new Contact(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, checkBox1.Checked);
+            if (textBox2.Text != "" && IsValidEmail(textBox3.Text))
             {
-
-                JesusBustillos.contactDatabase.Add (contact);
+                if (contact == SelectedContact)
+                {
+                    SelectedContact.FirstName = textBox1.Text;
+                    SelectedContact.LastName = textBox2.Text;
+                    SelectedContact.Email = textBox3.Text;
+                    SelectedContact.Notes = textBox4.Text;
+                    SelectedContact.IsFavorite = checkBox1.Checked;
+                }else
+                    JesusBustillos.contactDatabase.Add (contact);
                 mainWindow.updatedisplay();
                 this.Close();
             } else
@@ -43,6 +51,22 @@ namespace JesusBustillos.ContactManager.UI
         bool IsValidEmail (string source)
         {
             return MailAddress.TryCreate(source, out var address);
+        }
+
+        public Contact SelectedContact = null;
+        private void AddNewContact_Load ( object sender, EventArgs e )
+        {
+            
+                if (SelectedContact != null)
+            {
+                textBox1.Text = SelectedContact.FirstName;
+                textBox2.Text = SelectedContact.LastName;
+                textBox3.Text = SelectedContact.Email;
+                textBox4.Text = SelectedContact.Notes;
+                checkBox1.Checked = SelectedContact.IsFavorite;
+
+            };
+            ValidateChildren();
         }
     }
 }
