@@ -10,6 +10,12 @@ namespace JesusBustillos.ContactManager.UI
             InitializeComponent();
             listBox1.DoubleClick += new System.EventHandler(listBox1_DoubleClick);
             listBox1.KeyDown += new KeyEventHandler(listDeleteKey);
+
+            contactDatabase.Add(new Contact("John", "Doe", "123@gmail.com", "", false));
+            contactDatabase.Add(new Contact("Jane", "Doe", "321@gmail.com", "", false));
+            contactDatabase.Add(new Contact("Fred", "Doe", "678@gmail.com", "", false));
+
+            updatedisplay();
         }
         public void listDeleteKey(object sender, KeyEventArgs e )
         {
