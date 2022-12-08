@@ -138,5 +138,11 @@ namespace Nile.Windows
 
         private readonly IProductDatabase _database = new Nile.Stores.MemoryProductDatabase();
         #endregion
+
+        private void helpAboutToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            var about = new AboutForm();
+            about.ShowDialog();
+        }
     }
 }

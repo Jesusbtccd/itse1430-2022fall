@@ -1,16 +1,20 @@
 /*
  * ITSE 1430
  */
+using System.ComponentModel.DataAnnotations;
+
 namespace Nile
 {
     /// <summary>Represents a product.</summary>
-    public class Product
+    public class Product : IValidatableObject
     {
         /// <summary>Gets or sets the unique identifier.</summary>
+        [Range(0, Int32.MaxValue)]
         public int Id { get; set; }
 
         /// <summary>Gets or sets the name.</summary>
         /// <value>Never returns null.</value>
+        [Required(AllowEmptyStrings = false)]
         public string Name
         {
             get { return _name ?? ""; }
@@ -25,6 +29,8 @@ namespace Nile
         }
 
         /// <summary>Gets or sets the price.</summary>
+        [Range(0, Int32.MaxValue)]
+
         public decimal Price { get; set; } = 0;      
 
         /// <summary>Determines if discontinued.</summary>
@@ -33,6 +39,34 @@ namespace Nile
         public override string ToString()
         {
             return Name;
+        }
+
+        public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
+        {
+            var results = new List<ValidationResult>();
+            {
+                Validator.TryValidateProperty(this.Id, new ValidationContext(this, null, null) { MemberName = "Id" }, results);
+                Validator.TryValidateProperty(this.Name, new ValidationContext(this, null, null) { MemberName = "Name" }, results);
+                Validator.TryValidateProperty(this.Price, new ValidationContext(this, null, null) { MemberName = "Price" }, results);
+            }
+            return results;
+        }
+
+        public static bool IsValid (object instance, out string errorMessage)
+        {
+            var results = new List<ValidationResults>();
+            if (!Validator.TryValidateObject(instance, new ValidationContext(instance), results, true))
+            {
+                errorMessage = null;
+                return false;   
+            };
+            errorMessage = null;
+            return true;
+        }
+
+        public static void Validate ( object instance)
+        {
+            Validator.ValidateObject(instance, new ValidationContext(instance));
         }
 
         #region Private Members

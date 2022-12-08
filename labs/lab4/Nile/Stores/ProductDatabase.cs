@@ -13,6 +13,8 @@ namespace Nile.Stores
 
             //TODO: Validate product
 
+
+
             //Emulate database by storing copy
             return AddCore(product);
         }
