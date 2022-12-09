@@ -57,6 +57,7 @@ namespace Nile.Windows
             {
                 return;
             };
+            var btn = sender as Button;
 
             var product = new Product()
             {

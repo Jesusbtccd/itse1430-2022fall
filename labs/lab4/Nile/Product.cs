@@ -2,6 +2,8 @@
  * ITSE 1430
  */
 using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
 
 namespace Nile
 {
@@ -54,7 +56,7 @@ namespace Nile
 
         public static bool IsValid (object instance, out string errorMessage)
         {
-            var results = new List<ValidationResults>();
+            var results = new List<ValidationResult>();
             if (!Validator.TryValidateObject(instance, new ValidationContext(instance), results, true))
             {
                 errorMessage = null;
