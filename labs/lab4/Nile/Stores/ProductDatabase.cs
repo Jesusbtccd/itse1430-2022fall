@@ -1,6 +1,8 @@
 /*Jesus Bustillos
  * ITSE 1430 Fall 2022
  */
+using System.ComponentModel.DataAnnotations;
+
 namespace Nile.Stores
 {
     /// <summary>Base class for product database.</summary>
@@ -13,6 +15,17 @@ namespace Nile.Stores
 
             //TODO: Validate product
 
+            if (product == null)
+                throw new ArgumentNullException(nameof(product));
+
+            //IValidatableObject.Validate(product);
+
+            var existing = FindByTitle(product.Name);
+            if (existing != null)
+                throw new InvalidOperationException("");
+
+            product.OldMethod();
+
 
 
             //Emulate database by storing copy
@@ -23,6 +36,8 @@ namespace Nile.Stores
         public Product Get ( int id )
         {
             //TODO: Check arguments
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0.");   //ADDED 1ST
 
             return GetCore(id);
         }
@@ -37,19 +52,28 @@ namespace Nile.Stores
         public void Remove ( int id )
         {
             //TODO: Check arguments
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0.");   //ADDED 2ND
 
             RemoveCore(id);
         }
 
         /// <inheritdoc />
-        public Product Update ( Product product )
+        public Product Update ( int id, Product product )
         {
             //TODO: Check arguments
-
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be > 0.");   //ADDED 3RD
             //TODO: Validate product
-
+            if (product == null)
+                throw new ArgumentNullException(nameof(product));     //ADDED 4TH
+           // IValidatableObject.Validate(product);
+               
             //Get existing product
             var existing = GetCore(product.Id);
+            if (existing == null)
+                throw new ArgumentException("Movie does not exist", nameof(product));
+
 
             return UpdateCore(existing, product);
         }
@@ -66,5 +90,7 @@ namespace Nile.Stores
 
         protected abstract Product AddCore( Product product );
         #endregion
+        protected abstract Product FindByTitle (string title);
+        public Product Update ( Product product ) => throw new NotImplementedException();
     }
 }

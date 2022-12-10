@@ -1,5 +1,5 @@
-/*
- * ITSE 1430
+/*Jesus Bustillos
+ * ITSE 1430 Fall 2022
  */
 namespace Nile.Windows
 {

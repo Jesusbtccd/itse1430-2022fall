@@ -1,5 +1,5 @@
-/*
- * ITSE 1430
+/*Jesus Bustillos
+ * ITSE 1430 Fall 2022
  */
 namespace Nile.Stores
 {
@@ -81,6 +81,8 @@ namespace Nile.Stores
 
             return null;
         }
+
+        protected override Product FindByTitle ( string title ) => throw new NotImplementedException();
 
         private List<Product> _products = new List<Product>();
         private int _nextId = 1;

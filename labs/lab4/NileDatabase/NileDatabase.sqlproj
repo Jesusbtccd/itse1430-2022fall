@@ -68,8 +68,17 @@
     <Build Include="Stored Procedures\GetAllProducts.sql" />
     <Build Include="Stored Procedures\GetProduct.sql" />
     <Build Include="Stored Procedures\RemoveProduct.sql" />
+    <Build Include="AddProduct.sql" />
+    <Build Include="RemoveProduct.sql" />
+    <Build Include="GetAllProducts.sql" />
+    <Build Include="GetProduct.sql" />
+    <Build Include="Parameters.sql" />
+    <Build Include="UpdateProduct.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="InitializeProducts.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="NileDatabase.refactorlog" />
   </ItemGroup>
 </Project>
